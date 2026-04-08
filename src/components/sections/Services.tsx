@@ -6,18 +6,18 @@ import { Building, Briefcase, CalendarCheck } from "lucide-react";
 export default function Services() {
   const services = [
     {
-      title: "Limpieza Integral por Áreas",
-      description: "Intervenciones exhaustivas para mantener asépticos consorcios, dependencias públicas, clínicas, restaurantes, clubes y salones de eventos.",
+      title: "Amplia Cobertura Operativa",
+      description: "Desplegamos nuestros equipos en Consorcios, Oficinas corporativas, Entidades públicas/privadas, Bancos, Clínicas, Gimnasios, Colegios, Paseos de Compras y Restaurantes.",
       icon: <Building className="w-8 h-8 text-brand-600 dark:text-brand-400" />,
     },
     {
-      title: "Personal Especializado e Insumos",
-      description: "Ejecución de todas las suplencias (encargados, auxiliares de pisos, mantenimiento integral). Brindamos, de ser necesario, todo producto y herramienta para la higiene.",
+      title: "Personal Capacitado e Inédito",
+      description: "Valoramos no solo la experiencia previa, sino el buen trato humano y la presencia. Nuestro personal cuenta con instrucción específica para el bienestar del cliente y resolución de emergencias.",
       icon: <Briefcase className="w-8 h-8 text-brand-600 dark:text-brand-400" />,
     },
     {
-      title: "Flexibilidad Operativa Dinámica",
-      description: "Cualquier servicio contratado se ajusta estrictamente a tu cronograma: diariamente, semanalmente, franquicias mensuales o visitas adaptadas a urgencias de flujo.",
+      title: "Suplencias y Flexibilidad",
+      description: "Nos adaptamos a sus ritmos (diario, semanal, mensual o emergencias). Cubrimos todo tipo de suplencias para encargados, auxiliares de pisos y personal de mantenimiento en general.",
       icon: <CalendarCheck className="w-8 h-8 text-brand-600 dark:text-brand-400" />,
     }
   ];

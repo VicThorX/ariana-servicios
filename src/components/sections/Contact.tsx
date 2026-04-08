@@ -109,8 +109,8 @@ export default function Contact() {
                     <Mail className="w-6 h-6" />
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">Dpto. de Presupuestos</p>
-                    <a href="mailto:arianaservicios@hotmail.com" className="text-lg font-bold text-slate-900 dark:text-white hover:text-brand-600 dark:hover:text-brand-400 transition-colors">
+                    <p className="text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">Contacto Institucional</p>
+                    <a href="mailto:arianaservicios@hotmail.com" className="text-lg font-bold text-slate-900 dark:text-white hover:text-brand-600 dark:hover:text-brand-400 transition-colors break-all">
                       arianaservicios@hotmail.com
                     </a>
                   </div>
@@ -120,9 +120,9 @@ export default function Contact() {
                     <MapPin className="w-6 h-6" />
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">Sede Administrativa Centrada en</p>
-                    <p className="text-lg font-bold text-slate-900 dark:text-white leading-tight">Mar del Plata, Argentina</p>
-                    <p className="text-xs text-brand-600 dark:text-brand-400 mt-1 font-medium">Oficinas: Lun a Vie (10-18hs) • Guardias Anuales</p>
+                    <p className="text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">Cobertura en todo Mar del Plata</p>
+                    <p className="text-lg font-bold text-slate-900 dark:text-white leading-tight">Horario de Oficina</p>
+                    <p className="text-[0.80rem] text-brand-600 dark:text-brand-400 mt-1 font-bold">LUN a VIE (10 a 18 hs) • Emergencias garantizadas los 365 días</p>
                   </div>
                 </div>
               </div>
