@@ -32,6 +32,7 @@ export default function Footer() {
           <div>
             <h4 className="text-white font-bold mb-6 tracking-wide uppercase text-sm">Navegación</h4>
             <ul className="space-y-4 text-sm font-medium">
+              <li><Link href="#nosotros" className="hover:text-brand-400 transition-colors flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-brand-500"></span> Quiénes Somos</Link></li>
               <li><Link href="#servicios" className="hover:text-brand-400 transition-colors flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-brand-500"></span> Servicios Especializados</Link></li>
               <li><Link href="#beneficios" className="hover:text-brand-400 transition-colors flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-brand-500"></span> Beneficios</Link></li>
               <li><Link href="#contacto" className="hover:text-brand-400 transition-colors flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-brand-500"></span> Solicitar Presupuesto</Link></li>

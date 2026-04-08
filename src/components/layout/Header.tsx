@@ -44,6 +44,7 @@ export default function Header() {
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-8 font-medium">
+          <Link href="#nosotros" className="text-slate-600 hover:text-brand-600 dark:text-slate-300 dark:hover:text-brand-400 transition-colors">Nosotros</Link>
           <Link href="#servicios" className="text-slate-600 hover:text-brand-600 dark:text-slate-300 dark:hover:text-brand-400 transition-colors">Servicios</Link>
           <Link href="#beneficios" className="text-slate-600 hover:text-brand-600 dark:text-slate-300 dark:hover:text-brand-400 transition-colors">Beneficios</Link>
           <Link href="#clientes" className="text-slate-600 hover:text-brand-600 dark:text-slate-300 dark:hover:text-brand-400 transition-colors">Clientes</Link>
@@ -68,6 +69,7 @@ export default function Header() {
           mobileMenuOpen ? "max-h-80 py-4 opacity-100" : "max-h-0 py-0 opacity-0"
         }`}
       >
+        <Link href="#nosotros" onClick={() => setMobileMenuOpen(false)} className="text-slate-600 dark:text-slate-300 font-medium py-3 border-b border-slate-100 dark:border-slate-800">Nosotros</Link>
         <Link href="#servicios" onClick={() => setMobileMenuOpen(false)} className="text-slate-600 dark:text-slate-300 font-medium py-3 border-b border-slate-100 dark:border-slate-800">Servicios</Link>
         <Link href="#beneficios" onClick={() => setMobileMenuOpen(false)} className="text-slate-600 dark:text-slate-300 font-medium py-3 border-b border-slate-100 dark:border-slate-800">Beneficios</Link>
         <Link href="#clientes" onClick={() => setMobileMenuOpen(false)} className="text-slate-600 dark:text-slate-300 font-medium py-3">Clientes</Link>
