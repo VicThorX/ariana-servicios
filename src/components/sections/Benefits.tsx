@@ -81,7 +81,7 @@ export default function Benefits() {
               
               <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/90 via-black/50 to-transparent z-10"></div>
               <div className="absolute bottom-10 left-10 right-10 z-20">
-                <div className="glass rounded-2xl p-8 border border-white/20">
+                <div className="bg-white/10 backdrop-blur-xl rounded-2xl p-8 border border-white/20 shadow-2xl">
                   <div className="flex items-start gap-5">
                     <div className="p-3 bg-emerald-500/20 rounded-xl backdrop-blur-md">
                       <ShieldCheck className="w-8 h-8 text-emerald-400" />
