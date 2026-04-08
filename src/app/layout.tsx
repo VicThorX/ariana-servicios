@@ -13,6 +13,9 @@ const outfit = Outfit({
 export const metadata: Metadata = {
   title: "Ariana Servicios | Limpieza Integral de Consorcios",
   description: "Servicios de limpieza integral, suplencias de encargados y provisión de artículos para administraciones de consorcios y edificios.",
+  icons: {
+    icon: "/logo.png",
+  }
 };
 
 export default function RootLayout({

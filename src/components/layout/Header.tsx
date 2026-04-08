@@ -1,9 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Sparkles } from "lucide-react";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -27,19 +26,19 @@ export default function Header() {
     >
       <div className="container mx-auto px-6 flex items-center justify-between border-b-0">
         {/* Logo Section */}
-        <Link href="/" className="flex items-end gap-2 group">
-          <span 
-            className="text-4xl xl:text-5xl drop-shadow-sm transition-transform duration-300 group-hover:scale-105" 
-            style={{ 
-              fontFamily: "'Harrington', 'Gabriela', cursive, serif",
-              color: "#8ab4d7" // Color celeste extraído de la tarjeta
-            }}
-          >
-            ARIANA
-          </span>
-          <div className={`flex flex-col pb-1 transition-colors duration-300 ${scrolled ? 'text-slate-500 dark:text-slate-400' : 'text-slate-500 dark:text-slate-400'}`}>
-            <span className="text-[0.65rem] font-bold tracking-[0.2em] uppercase leading-none">Servicios</span>
-            <span className="text-[0.55rem] tracking-widest uppercase leading-none mt-0.5 opacity-80">de Limpieza</span>
+        <Link href="/" className="flex items-center gap-3 group">
+          {/* Isotipo: Cuadro con gradiente y destello */}
+          <div className="w-10 h-10 md:w-11 md:h-11 bg-gradient-to-br from-brand-600 to-cyan-500 rounded-[0.8rem] flex items-center justify-center transform transition-all duration-300 group-hover:rotate-12 group-hover:scale-110 shadow-lg shadow-brand-500/20">
+            <Sparkles className="w-5 h-5 md:w-6 md:h-6 text-white" />
+          </div>
+          {/* Wordmark Corporativo */}
+          <div className="flex flex-col justify-center">
+            <span className="text-2xl md:text-3xl font-extrabold tracking-tighter text-slate-900 dark:text-white leading-none transition-colors group-hover:text-brand-600 dark:group-hover:text-brand-400">
+              ARIANA<span className="text-brand-500">.</span>
+            </span>
+            <span className="text-[0.60rem] md:text-xs tracking-[0.25em] text-slate-500 dark:text-slate-400 font-bold uppercase leading-none mt-0.5 md:mt-1">
+              Servicio de Limpieza
+            </span>
           </div>
         </Link>
 

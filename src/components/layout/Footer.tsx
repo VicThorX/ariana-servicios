@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Sparkles } from "lucide-react";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -10,17 +11,16 @@ export default function Footer() {
           {/* Brand Col */}
           <div className="space-y-6">
             <Link href="/" className="inline-block group">
-              <span
-                className="text-4xl drop-shadow-sm block transition-transform group-hover:scale-105"
-                style={{
-                  fontFamily: "'Harrington', 'Gabriela', cursive, serif",
-                  color: "#8ab4d7"
-                }}
-              >
-                ARIANA
-              </span>
-              <span className="text-[0.65rem] font-bold tracking-[0.2em] uppercase leading-none text-slate-500 mt-1 block">
-                Servicios de Limpieza
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-gradient-to-br from-brand-600 to-cyan-500 rounded-[0.8rem] flex items-center justify-center transform transition-all duration-300 group-hover:rotate-12 group-hover:scale-110 shadow-lg shadow-brand-500/20">
+                  <Sparkles className="w-5 h-5 text-white" />
+                </div>
+                <span className="text-3xl font-extrabold tracking-tighter text-white transition-colors group-hover:text-brand-400">
+                  ARIANA<span className="text-brand-500">.</span>
+                </span>
+              </div>
+              <span className="text-[0.65rem] font-bold tracking-[0.25em] uppercase leading-none text-slate-500 mt-2 block">
+                Servicio de Limpieza
               </span>
             </Link>
             <p className="text-sm leading-relaxed max-w-sm">
