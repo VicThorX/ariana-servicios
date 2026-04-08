@@ -20,7 +20,7 @@ export default function Footer() {
                 </span>
               </div>
               <span className="text-[0.65rem] font-bold tracking-[0.25em] uppercase leading-none text-slate-500 mt-2 block">
-                Servicio de Limpieza
+                Servicios de Limpieza
               </span>
             </Link>
             <p className="text-sm leading-relaxed max-w-sm">

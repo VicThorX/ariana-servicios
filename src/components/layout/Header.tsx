@@ -37,7 +37,7 @@ export default function Header() {
               ARIANA<span className="text-brand-500">.</span>
             </span>
             <span className="text-[0.60rem] md:text-xs tracking-[0.25em] text-slate-500 dark:text-slate-400 font-bold uppercase leading-none mt-0.5 md:mt-1">
-              Servicio de Limpieza
+              Servicios de Limpieza
             </span>
           </div>
         </Link>
