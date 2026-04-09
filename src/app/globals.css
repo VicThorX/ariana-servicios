@@ -1,29 +1,52 @@
 @import "tailwindcss";
 
+/* Disable automatic OS dark mode - forces light theme everywhere */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
-  --color-brand-50: #eff6ff;
-  --color-brand-100: #dbeafe;
-  --color-brand-200: #bfdbfe;
-  --color-brand-300: #93c5fd;
-  --color-brand-400: #60a5fa;
-  --color-brand-500: #3b82f6;
-  --color-brand-600: #2563eb;
-  --color-brand-700: #1d4ed8;
-  --color-brand-800: #1e40af;
-  --color-brand-900: #1e3a8a;
-  --color-brand-950: #172554;
+  /* Peachy Beige (Primary Structure) */
+  --color-brand-50: #fdfaf8; /* Softest peach cream */
+  --color-brand-100: #fcf1e8;
+  --color-brand-200: #fadbc8;
+  --color-brand-300: #f6bda2;
+  --color-brand-400: #ef9773;
+  --color-brand-500: #e5774d; /* Warm peach */
+  --color-brand-600: #d65c36;
+  --color-brand-700: #b2452a;
+  --color-brand-800: #8c3825; /* Warm dusty terra instead of brown */
+  --color-brand-900: #713022;
+  --color-brand-950: #3d1710; /* Deep mahogany */
+
+  /* Soft Blush Pink (Accents and Highlights) */
+  --color-teal-50: #fdf2f6;
+  --color-teal-100: #fce5ee;
+  --color-teal-200: #fad1e0;
+  --color-teal-300: #f7b0c9;
+  --color-teal-400: #f286a9;
+  --color-teal-500: #e95786; /* Vibrant blush pink */
+  --color-teal-600: #d5366c;
+  --color-teal-700: #b52254;
+  --color-teal-800: #961f48;
+  --color-teal-900: #7f1e40;
+  --color-teal-950: #460c1f;
+  
+  /* Mauve / Soft Violet Accent (replaces lilac) */
+  --color-purple-50: #fdfafb;
+  --color-purple-100: #f9f3f6;
+  --color-purple-200: #f2e4ea;
+  --color-purple-300: #e8d0da;
+  --color-purple-400: #d6b2c4;
+  --color-purple-500: #c193ab; /* Mauve Rose */
+  --color-purple-600: #a3728f;
+  --color-purple-700: #885c76;
+  --color-purple-800: #714e61;
+  --color-purple-900: #5d4251;
+  --color-purple-950: #31212b;
 }
 
 :root {
-  --background: #ffffff;
-  --foreground: #0f172a; /* slate-900 */
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #020617; /* slate-950 */
-    --foreground: #f8fafc; /* slate-50 */
-  }
+  --background: #fdfdfc; /* Clean creamy bright base */
+  --foreground: #462529; /* Warm dark mahogany text */
 }
 
 body {
@@ -33,6 +56,6 @@ body {
 
 @layer utilities {
   .glass {
-    @apply bg-white/70 dark:bg-slate-900/70 backdrop-blur-md border border-white/20 dark:border-slate-800;
+    @apply bg-brand-50/70 backdrop-blur-md border border-white/60;
   }
 }
