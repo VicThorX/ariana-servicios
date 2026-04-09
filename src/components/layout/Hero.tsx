@@ -32,7 +32,7 @@ export default function Hero() {
         >
           <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/30 backdrop-blur-md text-brand-700 text-sm font-bold tracking-wide border border-white/60 shadow-sm">
             <Leaf className="w-4 h-4 text-teal-400" />
-            Cuidado y limpieza humana desde 2003
+            Dedicación y limpieza profesional desde 2003
           </span>
         </motion.div>
 
@@ -51,7 +51,7 @@ export default function Hero() {
           transition={{ duration: 0.7, delay: 0.2 }}
           className="text-lg md:text-xl text-slate-700 dark:text-brand-200 mb-12 max-w-2xl mx-auto leading-relaxed font-medium"
         >
-          Brindamos soluciones integrales de mantenimiento para <strong>bancos, oficinas, y consorcios</strong> en Mar del Plata. Ambientes relucientes con el toque humano y la seguridad que buscas.
+          Brindamos soluciones integrales de mantenimiento para <strong>bancos, oficinas, y consorcios</strong> en Mar del Plata. Ambientes relucientes con la calidez y seguridad que buscas.
         </motion.p>
 
         <motion.div

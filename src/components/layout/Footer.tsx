@@ -27,10 +27,10 @@ export default function Footer() {
             </h4>
             <ul className="space-y-4 text-sm font-bold text-brand-800">
               <li><Link href="#nosotros" className="hover:text-teal-600 transition-colors flex items-center gap-2">Quiénes Somos</Link></li>
-              <li><Link href="#servicios" className="hover:text-teal-600 transition-colors flex items-center gap-2">Oficinas y Consorcios</Link></li>
+              <li><Link href="#clientes" className="hover:text-teal-600 transition-colors flex items-center gap-2">Nuestros Clientes</Link></li>
+              <li><Link href="#servicios" className="hover:text-teal-600 transition-colors flex items-center gap-2">Servicios Integrales</Link></li>
               <li><Link href="#productos" className="hover:text-teal-600 transition-colors flex items-center gap-2">Insumos y Productos</Link></li>
               <li><Link href="#beneficios" className="hover:text-teal-600 transition-colors flex items-center gap-2">Garantía de Confianza</Link></li>
-              <li><Link href="#contacto" className="hover:text-teal-600 transition-colors flex items-center gap-2">Hablemos</Link></li>
             </ul>
           </div>
 

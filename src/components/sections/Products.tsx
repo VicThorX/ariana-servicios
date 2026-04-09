@@ -35,7 +35,7 @@ export default function Products() {
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.35 }}
+            viewport={{ once: false, amount: 0.35 }}
             className="text-4xl md:text-5xl font-bold text-slate-800 dark:text-brand-50 mb-6 font-sans capitalize"
           >
             Servicios y <span className="text-brand-600 dark:text-brand-400">Productos</span>
@@ -43,7 +43,7 @@ export default function Products() {
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.35 }}
+            viewport={{ once: false, amount: 0.35 }}
             transition={{ delay: 0.1 }}
             className="text-lg text-slate-600 dark:text-brand-200 max-w-2xl mx-auto font-medium"
           >
@@ -57,7 +57,7 @@ export default function Products() {
               key={index}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.35 }}
+              viewport={{ once: false, amount: 0.35 }}
               transition={{ delay: index * 0.15, duration: 0.6 }}
               className="group bg-white/80 dark:bg-brand-900/40 backdrop-blur-md overflow-hidden rounded-[2.5rem] border border-brand-100 dark:border-brand-800 shadow-xl shadow-brand-200/20 dark:shadow-none hover:shadow-2xl hover:border-brand-200 dark:hover:border-brand-700 transition-all duration-500 hover:-translate-y-2 flex flex-col cursor-default"
             >

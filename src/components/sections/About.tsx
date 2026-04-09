@@ -13,7 +13,7 @@ export default function About() {
           <motion.div 
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.4 }}
+            viewport={{ once: false, amount: 0.4 }}
             transition={{ duration: 0.6 }}
             className="w-full lg:w-5/12 relative"
           >
@@ -33,7 +33,7 @@ export default function About() {
               Desde el año 2003, entendimos que detrás de cada pasillo, oficina o consorcio hay personas que merecen habitar espacios de absoluta pulcritud. 
             </p>
             <p className="text-slate-600 dark:text-brand-200 text-lg leading-relaxed font-medium">
-              Somos una familia dedicada a aliviar las responsabilidades operativas de nuestros clientes mediante un equipo confiable, atento y profundamente humano, forjado en Mar del Plata.
+              Somos una familia dedicada a aliviar las responsabilidades operativas de nuestros clientes mediante un equipo confiable, atento y verdaderamente comprometido, forjado en Mar del Plata.
             </p>
           </motion.div>
           
@@ -41,7 +41,7 @@ export default function About() {
           <motion.div 
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.4 }}
+            viewport={{ once: false, amount: 0.4 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="w-full lg:w-7/12 space-y-6"
           >

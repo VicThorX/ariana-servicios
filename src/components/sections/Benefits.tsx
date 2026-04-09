@@ -30,7 +30,7 @@ export default function Benefits() {
           <motion.div 
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.35 }}
+            viewport={{ once: false, amount: 0.35 }}
             transition={{ duration: 0.6 }}
             className="w-full lg:w-1/2 space-y-8"
           >
@@ -43,7 +43,7 @@ export default function Benefits() {
                 Delega en nosotros y respira <span className="text-brand-500">tranquilo.</span>
               </h2>
               <p className="text-lg text-slate-600 dark:text-brand-200 font-medium">
-                Sabemos que administrar tu tiempo es fundamental. En Ariana, nos convertimos en tus aliados humanos y legales, asumiendo los riesgos mientras mantenemos tu entorno en perfecto estado.
+                Sabemos que administrar tu tiempo es fundamental. En Ariana, nos convertimos en tus aliados estratégicos y operativos, asumiendo los riesgos mientras mantenemos tu entorno en perfecto estado.
               </p>
             </div>
 
@@ -66,7 +66,7 @@ export default function Benefits() {
           <motion.div 
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.35 }}
+            viewport={{ once: false, amount: 0.35 }}
             transition={{ duration: 0.6 }}
             className="w-full lg:w-1/2 relative min-h-[600px] flex justify-center items-center"
           >

@@ -32,10 +32,10 @@ export default function Header() {
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-8 font-medium">
           <Link href="#nosotros" className="text-slate-600 hover:text-teal-600 dark:text-brand-100 dark:hover:text-teal-400 transition-colors duration-300">Nosotros</Link>
-          <Link href="#servicios" className="text-slate-600 hover:text-teal-600 dark:text-brand-100 dark:hover:text-teal-400 transition-colors duration-300">Oficinas y Bancos</Link>
-          <Link href="#productos" className="text-slate-600 hover:text-teal-600 dark:text-brand-100 dark:hover:text-teal-400 transition-colors duration-300">Insumos</Link>
-          <Link href="#beneficios" className="text-slate-600 hover:text-teal-600 dark:text-brand-100 dark:hover:text-teal-400 transition-colors duration-300">Cuidado Humano</Link>
           <Link href="#clientes" className="text-slate-600 hover:text-teal-600 dark:text-brand-100 dark:hover:text-teal-400 transition-colors duration-300">Clientes</Link>
+          <Link href="#servicios" className="text-slate-600 hover:text-teal-600 dark:text-brand-100 dark:hover:text-teal-400 transition-colors duration-300">Servicios</Link>
+          <Link href="#productos" className="text-slate-600 hover:text-teal-600 dark:text-brand-100 dark:hover:text-teal-400 transition-colors duration-300">Insumos</Link>
+          <Link href="#beneficios" className="text-slate-600 hover:text-teal-600 dark:text-brand-100 dark:hover:text-teal-400 transition-colors duration-300">Confianza</Link>
           <Link href="#contacto" className="px-6 py-2.5 bg-brand-500 hover:bg-brand-600 text-white rounded-[2rem] transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5">
             Contactar
           </Link>
@@ -58,10 +58,10 @@ export default function Header() {
         }`}
       >
         <Link href="#nosotros" onClick={() => setMobileMenuOpen(false)} className="text-slate-700 dark:text-brand-100 font-medium py-3 border-b border-white/50 dark:border-brand-900">Nosotros</Link>
-        <Link href="#servicios" onClick={() => setMobileMenuOpen(false)} className="text-slate-700 dark:text-brand-100 font-medium py-3 border-b border-white/50 dark:border-brand-900">Oficinas y Bancos</Link>
+        <Link href="#clientes" onClick={() => setMobileMenuOpen(false)} className="text-slate-700 dark:text-brand-100 font-medium py-3 border-b border-white/50 dark:border-brand-900">Clientes</Link>
+        <Link href="#servicios" onClick={() => setMobileMenuOpen(false)} className="text-slate-700 dark:text-brand-100 font-medium py-3 border-b border-white/50 dark:border-brand-900">Servicios</Link>
         <Link href="#productos" onClick={() => setMobileMenuOpen(false)} className="text-slate-700 dark:text-brand-100 font-medium py-3 border-b border-white/50 dark:border-brand-900">Nuestros Insumos</Link>
-        <Link href="#beneficios" onClick={() => setMobileMenuOpen(false)} className="text-slate-700 dark:text-brand-100 font-medium py-3 border-b border-white/50 dark:border-brand-900">Cuidado Humano</Link>
-        <Link href="#clientes" onClick={() => setMobileMenuOpen(false)} className="text-slate-700 dark:text-brand-100 font-medium py-3">Clientes</Link>
+        <Link href="#beneficios" onClick={() => setMobileMenuOpen(false)} className="text-slate-700 dark:text-brand-100 font-medium py-3 border-b border-white/50 dark:border-brand-900">Confianza</Link>
         <Link href="#contacto" onClick={() => setMobileMenuOpen(false)} className="mt-4 w-full text-center px-5 py-3 bg-brand-500 hover:bg-brand-600 text-white font-medium rounded-full transition-colors">
           Contactar
         </Link>
