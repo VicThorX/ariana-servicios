@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { Coffee, Home, Landmark } from "lucide-react";
 
 export default function Services() {
@@ -8,21 +9,21 @@ export default function Services() {
     {
       title: "Consorcios y Edificios",
       description: "Ofrecemos suplencias y atención constante para el cuidado de espacios comunes, asegurando que tu hogar brille todos los días.",
-      icon: <Home className="w-8 h-8 text-teal-600 dark:text-brand-400" />,
+      icon: <Home className="w-5 h-5 text-teal-600 dark:text-brand-400" />,
       color: "from-teal-100 to-transparent dark:from-brand-900/40",
       image: "/service-condominiums.png",
     },
     {
       title: "Oficinas y Espacios de Trabajo",
       description: "Entornos de trabajo limpios, ordenados y acogedores. Fomentamos la productividad con personal enfocado en el detalle y el buen trato.",
-      icon: <Coffee className="w-8 h-8 text-brand-600 dark:text-brand-400" />,
+      icon: <Coffee className="w-5 h-5 text-brand-600 dark:text-brand-400" />,
       color: "from-brand-100 to-transparent dark:from-brand-900/40",
       image: "/service-offices.png",
     },
     {
       title: "Entidades y Bancos",
       description: "Rigor organizativo combinado con calidez. Mantenemos tus sucursales relucientes, transmitiendo confianza y profesionalismo a tus clientes.",
-      icon: <Landmark className="w-8 h-8 text-amber-600 dark:text-amber-400" />,
+      icon: <Landmark className="w-5 h-5 text-amber-600 dark:text-amber-400" />,
       color: "from-amber-100 to-transparent dark:from-amber-900/40",
       image: "/service-institutions.png",
     }
@@ -78,31 +79,32 @@ export default function Services() {
             <motion.div 
               key={index}
               variants={itemVariants}
-              className="group relative p-10 rounded-[3rem] bg-white/70 dark:bg-slate-900 backdrop-blur-xl border border-brand-100 dark:border-slate-800 hover:border-brand-500/50 dark:hover:border-brand-500/50 hover:shadow-2xl hover:shadow-brand-500/10 transition-all duration-500 overflow-hidden"
+              className="group relative bg-white/80 dark:bg-slate-900 backdrop-blur-md overflow-hidden rounded-[2.5rem] border border-brand-100 dark:border-slate-800 shadow-xl shadow-brand-200/20 dark:shadow-none hover:shadow-2xl hover:border-brand-200 dark:hover:border-brand-500/50 transition-all duration-500 hover:-translate-y-2 flex flex-col cursor-default"
             >
-              <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl ${service.color} opacity-40 group-hover:scale-150 transition-transform duration-700 rounded-bl-full`}></div>
-              
-              {/* 
-                TODO: Agregar imagen macro de detalle de limpieza por servicio
-                (ej. teclados desinfectados, picaportes de bronce pulidos, zócalos de ascensor)
-              */}
-              <div className="relative w-full h-40 mb-6 rounded-[2rem] overflow-hidden bg-brand-50/50 dark:bg-slate-800/50">
-                <img
+              <div className="relative h-72 w-full overflow-hidden bg-brand-50/50 dark:bg-slate-800/50">
+                <Image
                   src={service.image}
-                  alt={`Detalle de limpieza — ${service.title}`}
-                  className="w-full h-full object-cover opacity-60 group-hover:opacity-80 transition-opacity duration-500"
+                  alt={service.title}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  className="object-cover transition-transform duration-1000 group-hover:scale-[1.03] opacity-90 group-hover:opacity-100"
                 />
               </div>
-              
-              <div className="w-16 h-16 rounded-[1.5rem] bg-white/90 dark:bg-slate-800 shadow-sm flex items-center justify-center mb-8 relative z-10 border border-brand-50/50 dark:border-slate-700">
-                {service.icon}
+
+              <div className="p-8 flex-1 flex flex-col relative z-20">
+                <div className={`absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-tl ${service.color} opacity-20 group-hover:opacity-40 group-hover:scale-150 transition-all duration-700 rounded-tl-full -z-10`}></div>
+                
+                <div className="w-12 h-12 bg-brand-50 dark:bg-slate-800 rounded-2xl flex items-center justify-center mb-5 border border-brand-100 dark:border-slate-700 group-hover:bg-brand-100 dark:group-hover:bg-slate-700 group-hover:scale-110 transition-all duration-500">
+                  {service.icon}
+                </div>
+
+                <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-3">
+                  {service.title}
+                </h3>
+                <p className="text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
+                  {service.description}
+                </p>
               </div>
-              <h3 className="text-xl md:text-2xl font-bold text-slate-800 dark:text-white mb-4 leading-snug relative z-10">
-                {service.title}
-              </h3>
-              <p className="text-slate-600 dark:text-slate-400 leading-relaxed font-medium relative z-10">
-                {service.description}
-              </p>
             </motion.div>
           ))}
         </motion.div>
