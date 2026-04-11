@@ -4,6 +4,7 @@ import Clients from "@/components/sections/Clients";
 import Services from "@/components/sections/Services";
 import Products from "@/components/sections/Products";
 import Benefits from "@/components/sections/Benefits";
+import LegalSecurity from "@/components/sections/LegalSecurity";
 import Contact from "@/components/sections/Contact";
 
 export default function Home() {
@@ -15,6 +16,7 @@ export default function Home() {
       <Services />
       <Products />
       <Benefits />
+      <LegalSecurity />
       <Contact />
     </main>
   );

@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import WhatsAppButton from "@/components/ui/WhatsAppButton";
+import ThemeProvider from "@/components/ui/ThemeProvider";
 
 const quicksand = Quicksand({
   variable: "--font-quicksand",
@@ -24,14 +25,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className="scroll-smooth">
+    <html lang="es" className="scroll-smooth" suppressHydrationWarning>
       <body
         className={`${quicksand.variable} font-sans antialiased`}
       >
-        <Header />
-        {children}
-        <Footer />
-        <WhatsAppButton />
+        <ThemeProvider>
+          <Header />
+          {children}
+          <Footer />
+          <WhatsAppButton />
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -1,42 +1,46 @@
 @import "tailwindcss";
 
-/* Disable automatic OS dark mode - forces light theme everywhere */
-@custom-variant dark (&:where(.dark, .dark *));
+/* Theme switching via class (next-themes adds .dark to <html>) */
+@custom-variant dark (&:is(.dark *));
 
 @theme {
+  /* ═══════════════════════════════════════════════════════════
+     LIGHT MODE PALETTE — Peachy Beige (from commit 60c6c5f)
+     ═══════════════════════════════════════════════════════════ */
+
   /* Peachy Beige (Primary Structure) */
-  --color-brand-50: #fdfaf8; /* Softest peach cream */
+  --color-brand-50: #fdfaf8;
   --color-brand-100: #fcf1e8;
   --color-brand-200: #fadbc8;
   --color-brand-300: #f6bda2;
   --color-brand-400: #ef9773;
-  --color-brand-500: #e5774d; /* Warm peach */
+  --color-brand-500: #e5774d;
   --color-brand-600: #d65c36;
   --color-brand-700: #b2452a;
-  --color-brand-800: #8c3825; /* Warm dusty terra instead of brown */
+  --color-brand-800: #8c3825;
   --color-brand-900: #713022;
-  --color-brand-950: #3d1710; /* Deep mahogany */
+  --color-brand-950: #3d1710;
 
-  /* Soft Blush Pink (Accents and Highlights) */
+  /* Soft Blush Pink (Accents — named "teal" for class compat) */
   --color-teal-50: #fdf2f6;
   --color-teal-100: #fce5ee;
   --color-teal-200: #fad1e0;
   --color-teal-300: #f7b0c9;
   --color-teal-400: #f286a9;
-  --color-teal-500: #e95786; /* Vibrant blush pink */
+  --color-teal-500: #e95786;
   --color-teal-600: #d5366c;
   --color-teal-700: #b52254;
   --color-teal-800: #961f48;
   --color-teal-900: #7f1e40;
   --color-teal-950: #460c1f;
-  
-  /* Mauve / Soft Violet Accent (replaces lilac) */
+
+  /* Mauve / Soft Violet Accent */
   --color-purple-50: #fdfafb;
   --color-purple-100: #f9f3f6;
   --color-purple-200: #f2e4ea;
   --color-purple-300: #e8d0da;
   --color-purple-400: #d6b2c4;
-  --color-purple-500: #c193ab; /* Mauve Rose */
+  --color-purple-500: #c193ab;
   --color-purple-600: #a3728f;
   --color-purple-700: #885c76;
   --color-purple-800: #714e61;
@@ -44,18 +48,32 @@
   --color-purple-950: #31212b;
 }
 
+/* ═══════════════════════════════════════════════════════════
+   CSS CUSTOM PROPERTIES for theming (light / dark)
+   ═══════════════════════════════════════════════════════════ */
+
 :root {
-  --background: #fdfdfc; /* Clean creamy bright base */
-  --foreground: #462529; /* Warm dark mahogany text */
+  --background: #fdfdfc;   /* Clean creamy bright base (light) */
+  --foreground: #462529;   /* Warm dark mahogany text (light) */
+}
+
+.dark {
+  --background: #020617;   /* slate-950 (dark) */
+  --foreground: #f8fafc;   /* slate-50 (dark)  */
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 @layer utilities {
   .glass {
     @apply bg-brand-50/70 backdrop-blur-md border border-white/60;
+  }
+  .dark .glass,
+  :is(.dark *).glass {
+    @apply bg-slate-900/70 backdrop-blur-md border border-slate-800;
   }
 }

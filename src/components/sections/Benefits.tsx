@@ -24,7 +24,7 @@ export default function Benefits() {
   ];
 
   return (
-    <section id="beneficios" className="py-24 bg-white/40 dark:bg-brand-950 overflow-x-clip relative">
+    <section id="beneficios" className="py-24 bg-white/40 dark:bg-slate-900 overflow-x-clip relative">
       <div className="container mx-auto px-6 max-w-6xl">
         <div className="flex flex-col lg:flex-row items-center gap-16">
           <motion.div 
@@ -35,14 +35,14 @@ export default function Benefits() {
             className="w-full lg:w-1/2 space-y-8"
           >
             <div>
-              <span className="inline-flex items-center gap-2 text-teal-700 dark:text-teal-400 font-bold tracking-widest uppercase text-xs mb-4">
+              <span className="inline-flex items-center gap-2 text-teal-700 dark:text-brand-400 font-bold tracking-widest uppercase text-xs mb-4">
                 <Sparkles className="w-4 h-4" />
                 Cuidado Integral
               </span>
-              <h2 className="text-4xl md:text-5xl font-extrabold text-slate-800 dark:text-brand-50 mt-2 mb-6 leading-tight">
+              <h2 className="text-4xl md:text-5xl font-extrabold text-slate-800 dark:text-white mt-2 mb-6 leading-tight">
                 Delega en nosotros y respira <span className="text-brand-500">tranquilo.</span>
               </h2>
-              <p className="text-lg text-slate-600 dark:text-brand-200 font-medium">
+              <p className="text-lg text-slate-600 dark:text-slate-400 font-medium">
                 Sabemos que administrar tu tiempo es fundamental. En Ariana, nos convertimos en tus aliados estratégicos y operativos, asumiendo los riesgos mientras mantenemos tu entorno en perfecto estado.
               </p>
             </div>
@@ -50,12 +50,12 @@ export default function Benefits() {
             <div className="space-y-8 mt-8">
               {benefits.map((benefit, index) => (
                 <div key={index} className="flex gap-5 items-start group">
-                  <div className="shrink-0 w-14 h-14 rounded-[1.2rem] bg-brand-50 dark:bg-brand-900/60 shadow-sm border border-brand-100 dark:border-brand-800 flex items-center justify-center group-hover:bg-brand-100 dark:group-hover:bg-brand-800 transition-colors">
+                  <div className="shrink-0 w-14 h-14 rounded-[1.2rem] bg-brand-50 dark:bg-slate-800 shadow-sm border border-brand-100 dark:border-slate-700 flex items-center justify-center group-hover:bg-brand-100 dark:group-hover:bg-slate-700 transition-colors">
                     {benefit.icon}
                   </div>
                   <div>
-                    <h4 className="text-xl font-bold text-slate-800 dark:text-brand-50 mb-2">{benefit.title}</h4>
-                    <p className="text-slate-600 dark:text-brand-200 leading-relaxed font-medium">{benefit.description}</p>
+                    <h4 className="text-xl font-bold text-slate-800 dark:text-white mb-2">{benefit.title}</h4>
+                    <p className="text-slate-600 dark:text-slate-400 leading-relaxed font-medium">{benefit.description}</p>
                   </div>
                 </div>
               ))}
@@ -70,34 +70,34 @@ export default function Benefits() {
             transition={{ duration: 0.6 }}
             className="w-full lg:w-1/2 relative min-h-[600px] flex justify-center items-center"
           >
-            <div className="absolute inset-0 rounded-[4rem] overflow-hidden bg-brand-900 shadow-2xl border-4 border-white dark:border-brand-900/50">
+            <div className="absolute inset-0 rounded-[4rem] overflow-hidden bg-brand-900 dark:bg-slate-900 shadow-2xl border-4 border-white dark:border-slate-800">
               <Image 
                 src="/building.png"
                 alt="Instalaciones Corporativas Limpias"
                 fill
                 sizes="(max-width: 1024px) 100vw, 50vw"
-                className="object-cover opacity-80 mix-blend-luminosity hover:scale-105 transition-transform duration-[2s]"
+                className="object-cover opacity-80 dark:opacity-70 mix-blend-luminosity hover:scale-105 transition-transform duration-[2s]"
               />
-              <div className="absolute inset-0 bg-gradient-to-tr from-brand-300/40 via-transparent to-brand-100/10 mix-blend-overlay"></div>
+              <div className="absolute inset-0 bg-gradient-to-tr from-brand-300/40 dark:from-brand-900 via-transparent to-brand-100/10 dark:to-brand-500/20 mix-blend-overlay dark:mix-blend-multiply"></div>
               
               <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/80 via-black/40 to-transparent z-10"></div>
               <div className="absolute bottom-10 left-10 right-10 z-20">
-                <div className="bg-white/20 dark:bg-brand-950/40 backdrop-blur-xl rounded-[2.5rem] p-8 border border-white/30 shadow-2xl">
+                <div className="bg-white/20 dark:bg-white/10 backdrop-blur-xl rounded-[2.5rem] dark:rounded-2xl p-8 border border-white/30 dark:border-white/20 shadow-2xl">
                   <div className="flex items-start gap-5">
-                    <div className="p-3 bg-teal-500/20 rounded-[1rem] backdrop-blur-md shrink-0">
-                      <ShieldCheck className="w-8 h-8 text-teal-300" />
+                    <div className="p-3 bg-teal-500/20 dark:bg-emerald-500/20 rounded-[1rem] backdrop-blur-md shrink-0">
+                      <ShieldCheck className="w-8 h-8 text-teal-300 dark:text-emerald-400" />
                     </div>
                     <div>
                       <p className="text-white font-bold text-xl mb-1">Cero Contingencias</p>
-                      <p className="text-slate-100 text-sm leading-relaxed font-medium">Garantía estricta de cumplimiento gremial. Nos cuidamos entre nosotros para cuidarte a ti.</p>
+                      <p className="text-slate-100 dark:text-slate-200 text-sm leading-relaxed font-medium">Garantía estricta de cumplimiento gremial. Nos cuidamos entre nosotros para cuidarte a ti.</p>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
             
-            <div className="absolute -top-10 -right-10 w-48 h-48 bg-brand-300 rounded-full blur-[80px] opacity-60"></div>
-            <div className="absolute -bottom-10 -left-10 w-48 h-48 bg-teal-300 rounded-full blur-[80px] opacity-40"></div>
+            <div className="absolute -top-10 -right-10 w-48 h-48 bg-brand-300 dark:bg-brand-400 rounded-full blur-[80px] opacity-60"></div>
+            <div className="absolute -bottom-10 -left-10 w-48 h-48 bg-teal-300 dark:bg-cyan-400 rounded-full blur-[80px] opacity-40"></div>
           </motion.div>
         </div>
       </div>
