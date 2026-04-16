@@ -31,14 +31,14 @@ export default function Header() {
         <Logo />
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-8 font-medium">
+        <nav className="hidden md:flex items-center gap-4 lg:gap-8 font-medium text-sm lg:text-base">
           <Link href="#nosotros" className="text-slate-600 hover:text-teal-600 dark:text-slate-300 dark:hover:text-brand-400 transition-colors duration-300">Nosotros</Link>
           <Link href="#clientes" className="text-slate-600 hover:text-teal-600 dark:text-slate-300 dark:hover:text-brand-400 transition-colors duration-300">Clientes</Link>
           <Link href="#servicios" className="text-slate-600 hover:text-teal-600 dark:text-slate-300 dark:hover:text-brand-400 transition-colors duration-300">Servicios</Link>
           <Link href="#productos" className="text-slate-600 hover:text-teal-600 dark:text-slate-300 dark:hover:text-brand-400 transition-colors duration-300">Insumos</Link>
           <Link href="#beneficios" className="text-slate-600 hover:text-teal-600 dark:text-slate-300 dark:hover:text-brand-400 transition-colors duration-300">Confianza</Link>
           <ThemeToggle />
-          <Link href="#contacto" className="px-6 py-2.5 bg-brand-500 hover:bg-brand-600 dark:bg-brand-600 dark:hover:bg-brand-700 text-white rounded-[2rem] transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5">
+          <Link href="#contacto" className="px-4 py-2 lg:px-6 lg:py-2.5 bg-brand-500 hover:bg-brand-600 dark:bg-brand-600 dark:hover:bg-brand-700 text-white rounded-[2rem] transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5">
             Contactar
           </Link>
         </nav>

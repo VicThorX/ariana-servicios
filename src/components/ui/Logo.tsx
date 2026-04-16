@@ -15,14 +15,14 @@ export default function Logo({ className, isDark }: LogoProps) {
     : `dark:drop-shadow-[0_0_1.5px_rgba(255,255,255,1)] dark:brightness-110`;
 
   return (
-    <Link href="/" className={`flex items-center group transition-transform duration-500 hover:scale-[1.02] ${className || ""}`}>
+    <Link href="/" className={`flex shrink-0 items-center group transition-transform duration-500 hover:scale-[1.02] ${className || ""}`}>
       <div className="relative flex items-center justify-center">
         <Image
           src="/hd_restoration_result_image.png"
           alt="Somos Ariana Limpieza"
           width={800}
           height={240}
-          className={`w-[12rem] md:w-[15rem] h-auto object-contain transition-all duration-300 ${imageClasses}`}
+          className={`w-[10rem] md:w-[11rem] lg:w-[15rem] h-auto object-contain transition-all duration-300 ${imageClasses}`}
           priority
         />
       </div>
