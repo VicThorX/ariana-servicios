@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { Coffee, Home, Landmark } from "lucide-react";
+import { Coffee, Home, Landmark, Leaf, Trash2, Truck, PackageSearch, TreePine, Building2, Droplets, Sparkles } from "lucide-react";
 
 export default function Services() {
   const services = [
@@ -27,6 +27,17 @@ export default function Services() {
       color: "from-amber-100 to-transparent dark:from-amber-900/40",
       image: "/service-institutions.png",
     }
+  ];
+
+  const additionalServices = [
+    { title: "Evaluaciones de Impacto Ambiental", icon: <Leaf className="w-6 h-6 text-emerald-500" /> },
+    { title: "Gestión integral de residuos", icon: <Trash2 className="w-6 h-6 text-slate-500" /> },
+    { title: "Soluciones de logística", icon: <Truck className="w-6 h-6 text-blue-500" /> },
+    { title: "Abastecimiento de productos y elementos de limpieza", icon: <PackageSearch className="w-6 h-6 text-amber-600 dark:text-amber-500" /> },
+    { title: "Mantenimiento de espacios verdes", icon: <TreePine className="w-6 h-6 text-green-600 dark:text-green-500" /> },
+    { title: "Mantenimiento de frentes", icon: <Building2 className="w-6 h-6 text-indigo-500" /> },
+    { title: "Hidrolavados, en paredes y veredas", icon: <Droplets className="w-6 h-6 text-cyan-500" /> },
+    { title: "Mantenimiento de lajas, porcelanatos, encerados", icon: <Sparkles className="w-6 h-6 text-yellow-500" /> },
   ];
 
   const containerVariants = {
@@ -107,6 +118,41 @@ export default function Services() {
               </div>
             </motion.div>
           ))}
+        </motion.div>
+
+        {/* --- Servicios Adicionales --- */}
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="mt-20 pt-16 border-t border-brand-200/60 dark:border-slate-800/60"
+        >
+          <div className="text-center mb-12">
+            <h3 className="text-2xl md:text-3xl font-bold text-slate-800 dark:text-white capitalize">
+              Cobertura <span className="text-brand-600 dark:text-brand-400">Integral</span>
+            </h3>
+            <p className="mt-4 text-slate-600 dark:text-slate-400 max-w-xl mx-auto">
+              Extendemos nuestra especialización para cubrir todas las áreas que tu edificio o empresa necesita.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+            {additionalServices.map((service, index) => (
+              <motion.div 
+                key={index}
+                whileHover={{ y: -5 }}
+                className="flex flex-col items-center text-center p-6 bg-white/60 dark:bg-slate-900/60 backdrop-blur-sm rounded-3xl border border-brand-100 dark:border-slate-800 shadow-sm hover:shadow-lg hover:border-brand-300 dark:hover:border-brand-500 transition-all"
+              >
+                <div className="w-14 h-14 bg-brand-50 dark:bg-slate-800 rounded-[1.25rem] flex items-center justify-center mb-4 transition-transform duration-300">
+                  {service.icon}
+                </div>
+                <h4 className="text-sm font-bold text-slate-700 dark:text-slate-300">
+                  {service.title}
+                </h4>
+              </motion.div>
+            ))}
+          </div>
         </motion.div>
       </div>
     </section>
