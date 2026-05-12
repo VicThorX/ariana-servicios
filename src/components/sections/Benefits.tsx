@@ -30,7 +30,7 @@ export default function Benefits() {
           <motion.div 
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.35 }}
+            viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 0.6 }}
             className="w-full lg:w-1/2 space-y-8"
           >
@@ -66,7 +66,7 @@ export default function Benefits() {
           <motion.div 
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.35 }}
+            viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 0.6 }}
             className="w-full lg:w-1/2 relative min-h-[600px] flex justify-center items-center"
           >

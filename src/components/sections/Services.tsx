@@ -83,7 +83,7 @@ export default function Services() {
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.35 }}
+          viewport={{ once: true, amount: 0.1 }}
           className="grid md:grid-cols-3 gap-8 md:gap-10"
         >
           {services.map((service, index) => (
