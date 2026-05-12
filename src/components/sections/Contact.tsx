@@ -68,7 +68,7 @@ export default function Contact() {
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.1 }}
+            viewport={{ once: true, amount: 0, margin: "0px 0px 400px 0px" }}
             className="text-4xl md:text-5xl font-extrabold text-slate-800 dark:text-white mb-6"
           >
             ¿Hablamos sobre tu <span className="text-teal-600 dark:text-brand-400">Empresa</span>?
@@ -76,7 +76,7 @@ export default function Contact() {
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.1 }}
+            viewport={{ once: true, amount: 0, margin: "0px 0px 400px 0px" }}
             transition={{ delay: 0.1 }}
             className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto font-medium"
           >
@@ -88,7 +88,7 @@ export default function Contact() {
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.1 }}
+            viewport={{ once: true, amount: 0, margin: "0px 0px 400px 0px" }}
             className="space-y-8"
           >
             <div className="bg-white/80 dark:bg-slate-900 p-8 md:p-10 rounded-[3rem] border border-brand-100 dark:border-slate-800 shadow-xl shadow-brand-200/20 dark:shadow-none backdrop-blur-md">
@@ -146,7 +146,7 @@ export default function Contact() {
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.1 }}
+            viewport={{ once: true, amount: 0, margin: "0px 0px 400px 0px" }}
             className="p-8 lg:p-10 bg-white dark:bg-slate-900 rounded-[3rem] border border-brand-100 dark:border-slate-800 shadow-xl relative"
           >
             <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-6">Contanos qué buscás</h3>

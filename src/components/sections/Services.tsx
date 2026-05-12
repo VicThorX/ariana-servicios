@@ -41,9 +41,8 @@ export default function Services() {
   ];
 
   const containerVariants = {
-    hidden: { opacity: 0 },
+    hidden: {},
     visible: { 
-      opacity: 1,
       transition: { staggerChildren: 0.2 }
     }
   };
@@ -83,7 +82,7 @@ export default function Services() {
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
+          viewport={{ once: true, amount: 0, margin: "0px 0px 400px 0px" }}
           className="grid md:grid-cols-3 gap-8 md:gap-10"
         >
           {services.map((service, index) => (
