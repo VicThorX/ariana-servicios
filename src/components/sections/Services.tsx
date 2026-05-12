@@ -63,7 +63,7 @@ export default function Services() {
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.35 }}
+            viewport={{ once: true, amount: 0.35 }}
             className="text-4xl md:text-5xl font-bold text-slate-800 dark:text-white mb-6 font-sans capitalize"
           >
             Espacios cuidados con <span className="text-brand-600 dark:text-brand-400">dedicación</span>
@@ -71,7 +71,7 @@ export default function Services() {
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.35 }}
+            viewport={{ once: true, amount: 0.35 }}
             transition={{ delay: 0.1 }}
             className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto font-medium"
           >
@@ -83,7 +83,7 @@ export default function Services() {
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: false, amount: 0.35 }}
+          viewport={{ once: true, amount: 0.35 }}
           className="grid md:grid-cols-3 gap-8 md:gap-10"
         >
           {services.map((service, index) => (

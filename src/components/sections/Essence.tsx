@@ -15,7 +15,7 @@ export default function Essence() {
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: false, amount: 0.3 }}
+            viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.6 }}
             className="w-full lg:w-5/12"
           >
@@ -41,7 +41,7 @@ export default function Essence() {
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: false, amount: 0.3 }}
+            viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="w-full lg:w-7/12 space-y-6"
           >
@@ -69,7 +69,7 @@ export default function Essence() {
                   <Sparkle className="w-8 h-8 text-brand-600 dark:text-cyan-400" />
                 </div>
                 <div>
-                  <h4 className="text-2xl font-bold text-slate-800 dark:text-white mb-3">Excelencia Cotidiana</h4>
+                  <h4 className="text-2xl font-bold text-slate-800 dark:text-white mb-3">Seguridad e Higiene</h4>
                   <p className="text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
                     Creemos en hacer bien las pequeñas cosas de todos los días. Con supervisiones preventivas y un equipo que siente pertenencia, mantenemos altos estándares de higiene para que puedas vivir con tranquilidad.
                   </p>

@@ -30,7 +30,7 @@ export default function Benefits() {
           <motion.div 
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: false, amount: 0.35 }}
+            viewport={{ once: true, amount: 0.35 }}
             transition={{ duration: 0.6 }}
             className="w-full lg:w-1/2 space-y-8"
           >
@@ -66,7 +66,7 @@ export default function Benefits() {
           <motion.div 
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: false, amount: 0.35 }}
+            viewport={{ once: true, amount: 0.35 }}
             transition={{ duration: 0.6 }}
             className="w-full lg:w-1/2 relative min-h-[600px] flex justify-center items-center"
           >
@@ -81,9 +81,9 @@ export default function Benefits() {
               <div className="absolute inset-0 bg-gradient-to-tr from-brand-300/40 dark:from-brand-900 via-transparent to-brand-100/10 dark:to-brand-500/20 mix-blend-overlay dark:mix-blend-multiply"></div>
               
               <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/80 via-black/40 to-transparent z-10"></div>
-              <div className="absolute bottom-10 left-10 right-10 z-20">
-                <div className="bg-white/20 dark:bg-white/10 backdrop-blur-xl rounded-[2.5rem] dark:rounded-2xl p-8 border border-white/30 dark:border-white/20 shadow-2xl">
-                  <div className="flex items-start gap-5">
+              <div className="absolute bottom-6 left-6 right-6 sm:bottom-10 sm:left-10 sm:right-10 z-20">
+                <div className="bg-white/20 dark:bg-white/10 backdrop-blur-xl rounded-[2rem] sm:rounded-[2.5rem] dark:rounded-2xl p-6 sm:p-8 border border-white/30 dark:border-white/20 shadow-2xl">
+                  <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-5 text-center sm:text-left">
                     <div className="p-3 bg-teal-500/20 dark:bg-emerald-500/20 rounded-[1rem] backdrop-blur-md shrink-0">
                       <ShieldCheck className="w-8 h-8 text-teal-300 dark:text-emerald-400" />
                     </div>

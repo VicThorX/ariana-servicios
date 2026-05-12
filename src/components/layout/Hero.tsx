@@ -49,10 +49,30 @@ export default function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.2 }}
-          className="text-lg md:text-xl text-slate-700 dark:text-slate-400 mb-12 max-w-2xl mx-auto leading-relaxed font-medium"
+          className="text-lg md:text-xl text-slate-700 dark:text-slate-400 mb-10 max-w-2xl mx-auto leading-relaxed font-medium"
         >
           Brindamos soluciones integrales de mantenimiento para <strong>oficinas comerciales, públicas y privadas, comercios, instituciones educativas, de salud, financieras, gimnasios, consorcios</strong> y espacios en general. Ambientes relucientes con la calidez y seguridad que buscas.
         </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.25 }}
+          className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10 w-full text-left"
+        >
+          <div className="bg-white/60 dark:bg-slate-900/50 backdrop-blur-md p-5 rounded-2xl border border-white/80 dark:border-slate-700/50 shadow-sm">
+            <h3 className="font-bold text-brand-800 dark:text-brand-300 mb-1 text-base">¿Quiénes Somos?</h3>
+            <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">Empresa marplatense familiar con más de 20 años de experiencia.</p>
+          </div>
+          <div className="bg-white/60 dark:bg-slate-900/50 backdrop-blur-md p-5 rounded-2xl border border-white/80 dark:border-slate-700/50 shadow-sm">
+            <h3 className="font-bold text-brand-800 dark:text-brand-300 mb-1 text-base">¿Qué Hacemos?</h3>
+            <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">Limpieza y mantenimiento integral corporativo y de consorcios.</p>
+          </div>
+          <div className="bg-white/60 dark:bg-slate-900/50 backdrop-blur-md p-5 rounded-2xl border border-white/80 dark:border-slate-700/50 shadow-sm">
+            <h3 className="font-bold text-brand-800 dark:text-brand-300 mb-1 text-base">¿Qué nos Destaca?</h3>
+            <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">Trato directo, atención al detalle y cero contingencias legales.</p>
+          </div>
+        </motion.div>
 
         <motion.div
           initial={{ opacity: 0, y: 30 }}

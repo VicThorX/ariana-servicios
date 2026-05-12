@@ -23,7 +23,7 @@ const values = [
     ribbon: "bg-cyan-500",
   },
   {
-    title: "Excelencia Cotidiana",
+    title: "Seguridad e Higiene",
     description: "Creemos en hacer bien las pequeñas cosas de todos los días. Con supervisiones preventivas y pertenencia, mantenemos altos estándares de higiene.",
     icon: <Sparkle className="w-6 h-6 text-amber-600 dark:text-amber-400" />,
     ribbon: "bg-amber-500",
@@ -43,7 +43,7 @@ export default function About() {
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: false, amount: 0.2 }}
+            viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.6 }}
           >
             {/* Badge */}
@@ -85,7 +85,7 @@ export default function About() {
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: false, amount: 0.2 }}
+            viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.6, delay: 0.15 }}
             className="grid grid-cols-1 sm:grid-cols-2 gap-5"
           >
