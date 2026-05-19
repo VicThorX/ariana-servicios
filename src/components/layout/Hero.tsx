@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Leaf } from "lucide-react";
 import Link from "next/link";
-
+import Image from "next/image";
 export default function Hero() {
   return (
     <section className="relative min-h-[95vh] flex items-center justify-center overflow-x-clip rounded-b-[4rem] md:rounded-b-[6rem] overflow-hidden -mt-2">
@@ -13,10 +13,12 @@ export default function Hero() {
           TODO: Reemplazar con imágenes macro de detalles de limpieza 
           (ej. teclados desinfectados, picaportes de bronce pulidos, zócalos de ascensor) 
         */}
-        <img
+        <Image
           src="/hero-cleaning.png"
           alt="Lobby corporativo impecable — limpieza profesional de espacios"
-          className="w-full h-full object-cover object-center"
+          fill
+          priority
+          className="object-cover object-center"
         />
         {/* Light mode overlay */}
         <div className="absolute inset-0 bg-white/60 dark:bg-slate-950/80 backdrop-blur-[2px]"></div>
