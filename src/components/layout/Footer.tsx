@@ -57,8 +57,8 @@ export default function Footer() {
               {/* Email */}
               <li className="flex items-center gap-3 pt-2 text-brand-400">
                 <span className="w-8 h-8 rounded-full bg-brand-900/30 flex items-center justify-center border border-brand-800/50 shrink-0">✉️</span>
-                <a href="mailto:arianaservicios@hotmail.com" className="hover:underline font-medium">
-                  arianaservicios@hotmail.com
+                <a href="mailto:info@arianaservicios.com.ar" className="hover:underline font-medium">
+                  info@arianaservicios.com.ar
                 </a>
               </li>
 

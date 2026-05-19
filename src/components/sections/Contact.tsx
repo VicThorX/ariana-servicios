@@ -122,8 +122,8 @@ export default function Contact() {
                   </div>
                   <div className="mt-1">
                     <p className="text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">O si prefieres escribirnos</p>
-                    <a href="mailto:arianaservicios@hotmail.com" className="text-lg font-bold text-slate-800 dark:text-white hover:text-brand-600 dark:hover:text-brand-400 transition-colors break-all">
-                      arianaservicios@hotmail.com
+                    <a href="mailto:info@arianaservicios.com.ar" className="text-lg font-bold text-slate-800 dark:text-white hover:text-brand-600 dark:hover:text-brand-400 transition-colors break-all">
+                      info@arianaservicios.com.ar
                     </a>
                   </div>
                 </div>

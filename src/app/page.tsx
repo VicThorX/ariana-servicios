@@ -16,7 +16,7 @@ export default function Home() {
     "@id": "https://arianaservicios.com.ar",
     "url": "https://arianaservicios.com.ar",
     "telephone": "+5492235220338",
-    "email": "arianaservicios@hotmail.com",
+    "email": "info@arianaservicios.com.ar",
     "address": {
       "@type": "PostalAddress",
       "addressLocality": "Mar del Plata",
