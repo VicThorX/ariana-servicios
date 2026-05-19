@@ -5,6 +5,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import WhatsAppButton from "@/components/ui/WhatsAppButton";
 import ThemeProvider from "@/components/ui/ThemeProvider";
+import { Analytics } from "@vercel/analytics/next";
 
 const quicksand = Quicksand({
   variable: "--font-quicksand",
@@ -84,6 +85,7 @@ export default function RootLayout({
           {children}
           <Footer />
           <WhatsAppButton />
+          <Analytics />
         </ThemeProvider>
       </body>
     </html>
