@@ -15,10 +15,10 @@ const quicksand = Quicksand({
 export const metadata: Metadata = {
   metadataBase: new URL('https://arianaservicios.com.ar'),
   title: {
-    default: "Ariana Servicios | Limpieza Profesional Integral en Mar del Plata",
+    default: "Empresa de Limpieza en Mar del Plata | Ariana Servicios",
     template: "%s | Ariana Servicios"
   },
-  description: "Servicios de limpieza integral, mantenimiento y suplencias para empresas, oficinas, consorcios e instituciones en Mar del Plata.",
+  description: "Empresa líder de limpieza en Mar del Plata. Más de 20 años de experiencia en limpieza profesional de oficinas, consorcios y finales de obra. ¡Pedí tu presupuesto hoy!",
   keywords: ["limpieza profesional", "limpieza de oficinas", "limpieza de empresas", "limpieza de consorcios", "mantenimiento institucional", "suplencia de personal", "Mar del Plata", "artículos de limpieza"],
   authors: [{ name: "Ariana Servicios" }],
   creator: "Ariana Servicios",
@@ -32,8 +32,8 @@ export const metadata: Metadata = {
     canonical: '/',
   },
   openGraph: {
-    title: 'Ariana Servicios | Limpieza Profesional Integral',
-    description: 'Soluciones de limpieza, mantenimiento y suplencias para empresas, oficinas y consorcios en Mar del Plata.',
+    title: 'Ariana Servicios | Empresa de Limpieza en Mar del Plata',
+    description: 'Empresa líder de limpieza en Mar del Plata. Más de 20 años de experiencia en limpieza profesional de oficinas, consorcios y finales de obra. ¡Pedí tu presupuesto hoy!',
     url: 'https://arianaservicios.com.ar',
     siteName: 'Ariana Servicios',
     images: [
@@ -49,13 +49,18 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Ariana Servicios | Limpieza Profesional Integral',
-    description: 'Soluciones de limpieza, mantenimiento y suplencias en Mar del Plata.',
+    title: 'Ariana Servicios | Empresa de Limpieza en Mar del Plata',
+    description: 'Empresa líder de limpieza en Mar del Plata. Más de 20 años de experiencia en limpieza profesional de oficinas, consorcios y finales de obra. ¡Pedí tu presupuesto hoy!',
     images: ['/logo_somos_ariana.png'],
   },
   icons: {
-    icon: "/logo_somos_ariana.png",
-    apple: "/logo_somos_ariana.png",
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon.png", type: "image/png", sizes: "512x512" },
+    ],
+    apple: [
+      { url: "/apple-icon.png", sizes: "180x180" }
+    ],
   },
   robots: {
     index: true,
