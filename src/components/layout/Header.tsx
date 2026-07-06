@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import Logo from "@/components/ui/Logo";
 import ThemeToggle from "@/components/ui/ThemeToggle";
@@ -9,6 +10,7 @@ import ThemeToggle from "@/components/ui/ThemeToggle";
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -17,6 +19,11 @@ export default function Header() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Helper para generar enlaces relativos inteligentes
+  const getLinkHref = (hash: string) => {
+    return pathname === "/" ? hash : `/${hash}`;
+  };
 
   return (
     <header
@@ -32,14 +39,13 @@ export default function Header() {
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-4 lg:gap-8 font-medium text-sm lg:text-base">
-          <Link href="#nosotros" className="text-slate-600 hover:text-teal-600 dark:text-slate-300 dark:hover:text-brand-400 transition-colors duration-300">Nosotros</Link>
-          <Link href="#clientes" className="text-slate-600 hover:text-teal-600 dark:text-slate-300 dark:hover:text-brand-400 transition-colors duration-300">Clientes</Link>
-          <Link href="#servicios" className="text-slate-600 hover:text-teal-600 dark:text-slate-300 dark:hover:text-brand-400 transition-colors duration-300">Servicios</Link>
-          <Link href="#productos" className="text-slate-600 hover:text-teal-600 dark:text-slate-300 dark:hover:text-brand-400 transition-colors duration-300">Insumos</Link>
-          <Link href="#beneficios" className="text-slate-600 hover:text-teal-600 dark:text-slate-300 dark:hover:text-brand-400 transition-colors duration-300">Confianza</Link>
+          <Link href={getLinkHref("#nosotros")} className="text-slate-650 hover:text-brand-600 dark:text-slate-300 dark:hover:text-brand-400 transition-colors duration-300">Nosotros</Link>
+          <Link href={getLinkHref("#servicios")} className="text-slate-650 hover:text-brand-600 dark:text-slate-300 dark:hover:text-brand-400 transition-colors duration-300">Servicios</Link>
+          <Link href="/productos" className={`text-slate-650 hover:text-brand-600 dark:text-slate-300 dark:hover:text-brand-400 transition-colors duration-300 ${pathname === "/productos" ? "text-brand-600 dark:text-brand-400 font-bold" : ""}`}>Insumos y Tienda</Link>
+          <Link href="/trabaja-con-nosotros" className={`text-slate-650 hover:text-brand-600 dark:text-slate-300 dark:hover:text-brand-400 transition-colors duration-300 ${pathname === "/trabaja-con-nosotros" ? "text-brand-600 dark:text-brand-400 font-bold" : ""}`}>Trabajá con Nosotros</Link>
           <ThemeToggle />
-          <Link href="#contacto" className="px-4 py-2 lg:px-6 lg:py-2.5 bg-brand-500 hover:bg-brand-600 dark:bg-brand-600 dark:hover:bg-brand-700 text-white rounded-[2rem] transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5">
-            Contactar
+          <Link href={getLinkHref("#contacto")} className="px-4 py-2 lg:px-6 lg:py-2.5 bg-brand-500 hover:bg-brand-600 dark:bg-brand-600 dark:hover:bg-brand-700 text-white rounded-[2rem] transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 font-bold">
+            Cotizar
           </Link>
         </nav>
 
@@ -62,13 +68,12 @@ export default function Header() {
           mobileMenuOpen ? "max-h-96 py-6 opacity-100" : "max-h-0 py-0 opacity-0"
         }`}
       >
-        <Link href="#nosotros" onClick={() => setMobileMenuOpen(false)} className="text-slate-700 dark:text-slate-300 font-medium py-3 border-b border-white/50 dark:border-slate-800">Nosotros</Link>
-        <Link href="#clientes" onClick={() => setMobileMenuOpen(false)} className="text-slate-700 dark:text-slate-300 font-medium py-3 border-b border-white/50 dark:border-slate-800">Clientes</Link>
-        <Link href="#servicios" onClick={() => setMobileMenuOpen(false)} className="text-slate-700 dark:text-slate-300 font-medium py-3 border-b border-white/50 dark:border-slate-800">Servicios</Link>
-        <Link href="#productos" onClick={() => setMobileMenuOpen(false)} className="text-slate-700 dark:text-slate-300 font-medium py-3 border-b border-white/50 dark:border-slate-800">Nuestros Insumos</Link>
-        <Link href="#beneficios" onClick={() => setMobileMenuOpen(false)} className="text-slate-700 dark:text-slate-300 font-medium py-3 border-b border-white/50 dark:border-slate-800">Confianza</Link>
-        <Link href="#contacto" onClick={() => setMobileMenuOpen(false)} className="mt-4 w-full text-center px-5 py-3 bg-brand-500 hover:bg-brand-600 dark:bg-brand-600 dark:hover:bg-brand-700 text-white font-medium rounded-full transition-colors">
-          Contactar
+        <Link href={getLinkHref("#nosotros")} onClick={() => setMobileMenuOpen(false)} className="text-slate-700 dark:text-slate-300 font-medium py-3 border-b border-white/50 dark:border-slate-800">Nosotros</Link>
+        <Link href={getLinkHref("#servicios")} onClick={() => setMobileMenuOpen(false)} className="text-slate-700 dark:text-slate-300 font-medium py-3 border-b border-white/50 dark:border-slate-800">Servicios Integraes</Link>
+        <Link href="/productos" onClick={() => setMobileMenuOpen(false)} className="text-slate-700 dark:text-slate-300 font-medium py-3 border-b border-white/50 dark:border-slate-800">Insumos y Tienda</Link>
+        <Link href="/trabaja-con-nosotros" onClick={() => setMobileMenuOpen(false)} className="text-slate-700 dark:text-slate-300 font-medium py-3 border-b border-white/50 dark:border-slate-800">Trabajá con Nosotros</Link>
+        <Link href={getLinkHref("#contacto")} onClick={() => setMobileMenuOpen(false)} className="mt-4 w-full text-center px-5 py-3 bg-brand-500 hover:bg-brand-600 dark:bg-brand-600 dark:hover:bg-brand-700 text-white font-medium rounded-full transition-colors">
+          Cotizar Servicio
         </Link>
       </div>
     </header>

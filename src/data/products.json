@@ -1,0 +1,82 @@
+[
+  {
+    "id": "prod-spray-multiuso",
+    "title": "Limpiavidrios Profesional Antiempaño",
+    "description": "Fórmula de rápida evaporación con agentes tensioactivos que disuelven grasitud y polvo. No deja marcas y genera una capa repelente al agua y antiempaño.",
+    "category": "limpiadores",
+    "price": 2500,
+    "image": "/cleaner_spray.png",
+    "specs": ["Rápida evaporación", "Sin aureolas", "Apto cristales y acrílicos"],
+    "packSize": "Botella Gatillo de 1 Litro"
+  },
+  {
+    "id": "prod-gallon-cera",
+    "title": "Cera Acrílica Autobrillo Incolora",
+    "description": "Copolímero acrílico de alta densidad ideal para tránsito pesado. Apto para pisos de mosaico, baldosa, flexiplast y madera tratada. Brillo espejo duradero.",
+    "category": "insumos",
+    "price": 6800,
+    "image": "/wax_gallon.png",
+    "specs": ["Antideslizante", "Resiste marcas de calzado", "Brillo natural sin lustrar"],
+    "packSize": "Bidón de 5 Litros"
+  },
+  {
+    "id": "prod-eco-lavanda",
+    "title": "Ambientador Concentrado Eco Lavanda",
+    "description": "Aromatizador ambiental ecológico formulado con aceites esenciales naturales. Neutraliza olores orgánicos sin aerosoles ni propelentes tóxicos.",
+    "category": "ecologicos",
+    "price": 3200,
+    "image": "/lavender_spray.png",
+    "specs": ["Fórmula biodegradable", "Fragancia persistente 24hs", "No reactivo e hipoalergénico"],
+    "packSize": "Botella Pulverizadora de 1 Litro"
+  },
+  {
+    "id": "prod-gallon-hands",
+    "title": "Jabón Líquido Humectante de Manos",
+    "description": "Formulado con pH neutro y extracto de aloe vera. Limpieza profunda cuidando la piel de los colaboradores de oficinas y comercios de alto tránsito.",
+    "category": "insumos",
+    "price": 4900,
+    "image": "/soap_gallon.png",
+    "specs": ["pH 5.5 balanceado", "Extracto natural de Aloe Vera", "Libre de parabenos"],
+    "packSize": "Bidón de 5 Litros"
+  },
+  {
+    "id": "prod-spray-desengrasante",
+    "title": "Desengrasante Multiuso Activo",
+    "description": "Poderoso limpiador alcalino para superficies lavables en cocinas, comedores y áreas industriales. Remueve grasas duras y tizne sin dañar metales.",
+    "category": "limpiadores",
+    "price": 3400,
+    "image": "/degreaser_spray.png",
+    "specs": ["Fórmula alcalina concentrada", "Disuelve aceites pesados", "Apto gastronomía"],
+    "packSize": "Botella de 1 Litro"
+  },
+  {
+    "id": "prod-eco-cleaner",
+    "title": "Limpiador Ecológico de Pisos Biodegradable",
+    "description": "Fórmula concentrada a base de plantas y materias primas renovables. Limpieza profunda y brillo natural con mínimo impacto ambiental.",
+    "category": "ecologicos",
+    "price": 4100,
+    "image": "/floor_gallon.png",
+    "specs": ["Sello Verde", "Aroma cítrico natural", "Sin cloro ni amoníaco"],
+    "packSize": "Bidón de 5 Litros"
+  },
+  {
+    "id": "prod-acc-higienico",
+    "title": "Papel Higiénico Interdoblado H. Doble",
+    "description": "Papel higiénico premium hoja doble de máxima absorción y suavidad. Ideal para dispensers en sanitarios institucionales de oficinas y consorcios.",
+    "category": "accesorios",
+    "price": 8500,
+    "image": "/toilet_paper_pack.png",
+    "specs": ["100% fibra virgen", "Hoja doble gofrada", "Alta desintegración en agua"],
+    "packSize": "Caja de 40 paquetes (8000 hojas)"
+  },
+  {
+    "id": "prod-acc-toallas",
+    "title": "Toallas de Papel Interdobladas Classic",
+    "description": "Toallas de mano interdobladas gofradas de una hoja para dispensers. Excelente absorción y resistencia en húmedo, reduciendo el desperdicio.",
+    "category": "accesorios",
+    "price": 9200,
+    "image": "/paper_towels_pack.png",
+    "specs": ["Excelente absorción", "Hoja gofrada texturada", "Tamaño estándar universal"],
+    "packSize": "Caja de 20 paquetes (5000 toallas)"
+  }
+]

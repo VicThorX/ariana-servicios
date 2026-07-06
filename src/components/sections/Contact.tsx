@@ -1,14 +1,90 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Mail, MapPin, Send, Loader2, CheckCircle2, AlertCircle } from "lucide-react";
-import { useState } from "react";
-import { submitContactForm } from "@/app/actions/contact";
+import { motion, AnimatePresence } from "framer-motion";
+import { 
+  Mail, MapPin, Send, Loader2, CheckCircle2, AlertCircle, 
+  Upload, X, Building2, User, Clock, Calendar, ShieldCheck, Lock 
+} from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import { submitQuoteForm } from "@/app/actions/contact";
+
+const MAX_FILES = 5;
+const MAX_SIZE_MB = 2;
+const MAX_SIZE_BYTES = MAX_SIZE_MB * 1024 * 1024;
 
 export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [feedback, setFeedback] = useState<{ type: 'success' | 'error' | null, message: string }>({ type: null, message: '' });
   const [errors, setErrors] = useState<Record<string, string>>({});
+  
+  // Form State
+  const [establishmentType, setEstablishmentType] = useState("");
+  const [hasCurrentService, setHasCurrentService] = useState("");
+  
+  // File Upload State
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [previews, setPreviews] = useState<string[]>([]);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Clean previews on unmount
+  useEffect(() => {
+    return () => {
+      previews.forEach(url => URL.revokeObjectURL(url));
+    };
+  }, [previews]);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) return;
+    const files = Array.from(e.target.files);
+    
+    // Validar cantidad máxima
+    if (selectedFiles.length + files.length > MAX_FILES) {
+      setErrors(prev => ({ ...prev, photos: `Solo podés subir hasta ${MAX_FILES} fotos en total.` }));
+      return;
+    }
+
+    const validFiles: File[] = [];
+    const newPreviews: string[] = [];
+    let fileError = "";
+
+    files.forEach(file => {
+      // Validar tipo de archivo (solo imágenes)
+      if (!file.type.startsWith("image/")) {
+        fileError = "Solo se permiten archivos de imagen (PNG, JPG, JPEG, WEBP).";
+        return;
+      }
+      // Validar tamaño de archivo (máx 2MB)
+      if (file.size > MAX_SIZE_BYTES) {
+        fileError = `Las imágenes no deben superar los ${MAX_SIZE_MB}MB por unidad.`;
+        return;
+      }
+      validFiles.push(file);
+      newPreviews.push(URL.createObjectURL(file));
+    });
+
+    if (fileError) {
+      setErrors(prev => ({ ...prev, photos: fileError }));
+      return;
+    }
+
+    setErrors(prev => {
+      const copy = { ...prev };
+      delete copy.photos;
+      return copy;
+    });
+
+    setSelectedFiles(prev => [...prev, ...validFiles]);
+    setPreviews(prev => [...prev, ...newPreviews]);
+
+    // Limpiar input para permitir subir el mismo archivo si se elimina
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  };
+
+  const removeFile = (index: number) => {
+    URL.revokeObjectURL(previews[index]);
+    setSelectedFiles(prev => prev.filter((_, i) => i !== index));
+    setPreviews(prev => prev.filter((_, i) => i !== index));
+  };
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -17,42 +93,100 @@ export default function Contact() {
     setErrors({});
 
     const form = e.currentTarget;
-    const formData = new FormData(form);
+    const formFields = new FormData(form);
 
-    const requestData = {
-      name: (formData.get("name") as string).trim(),
-      phone: (formData.get("phone") as string).trim(),
-      email: (formData.get("email") as string).trim(),
-      address: (formData.get("address") as string).trim(),
-      message: (formData.get("message") as string).trim(),
-    };
+    // Obtener valores para validación en Front-end
+    const name = (formFields.get("name") as string).trim();
+    const role = (formFields.get("role") as string).trim();
+    const email = (formFields.get("email") as string).trim();
+    const phone = (formFields.get("phone") as string).trim();
+    const estType = (formFields.get("establishmentType") as string).trim();
+    const address = (formFields.get("address") as string).trim();
+    const frequency = (formFields.get("frequencyHoursDays") as string).trim();
+    const schedule = (formFields.get("preferredSchedule") as string).trim();
+    const start = (formFields.get("estimatedStartDate") as string).trim();
+    const message = (formFields.get("message") as string).trim();
+    const privacyAccepted = formFields.get("privacyAccepted") === "on";
 
-    // FrontEnd UI Validations
+    // Lógica condicional de consorcios
+    const adminName = (formFields.get("adminName") as string || "").trim();
+    const adminAddress = (formFields.get("adminAddress") as string || "").trim();
+    const adminContact = (formFields.get("adminContact") as string || "").trim();
+
+    // Validaciones
     const newErrors: Record<string, string> = {};
-    if (!requestData.name) {
-      newErrors.name = "Por favor, indícanos cómo te llamas o el nombre de tu lugar.";
+    if (!name) newErrors.name = "Por favor, indícanos tu nombre y apellido.";
+    if (!role) newErrors.role = "Por favor, dinos cuál es tu cargo.";
+    if (!email) {
+      newErrors.email = "Necesitamos tu email para responderte.";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      newErrors.email = "Este formato de correo no es correcto.";
     }
-    if (!requestData.email) {
-      newErrors.email = "Necesitamos tu email para poder reponderte.";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(requestData.email)) {
-      newErrors.email = "Este formato de correo no parece correcto.";
-    }
-    if (!requestData.message) {
-      newErrors.message = "Cuéntanos un poco sobre qué necesitas.";
+    if (!phone) newErrors.phone = "Por favor, ingresa tu teléfono.";
+    if (!estType) newErrors.establishmentType = "Selecciona el tipo de establecimiento.";
+    if (!address) newErrors.address = "Indica la dirección del lugar a cotizar.";
+    if (!frequency) newErrors.frequencyHoursDays = "Indica la frecuencia y cantidad de horas deseadas.";
+    if (!schedule) newErrors.preferredSchedule = "Indica los días y horarios de preferencia.";
+    if (!hasCurrentService) newErrors.hasCurrentService = "Selecciona si cuentas actualmente con el servicio.";
+    if (!start) newErrors.estimatedStartDate = "Selecciona una fecha de comienzo estimada.";
+    if (!message) newErrors.message = "Detállanos un poco qué necesitas.";
+    if (!privacyAccepted) newErrors.privacyAccepted = "Debes aceptar la protección de datos y spam.";
+
+    // Validaciones específicas para Consorcio
+    if (estType.toLowerCase() === "consorcio") {
+      if (!adminName) newErrors.adminName = "Indica el nombre de la administración.";
+      if (!adminAddress) newErrors.adminAddress = "Indica la dirección de la administración.";
+      if (!adminContact) newErrors.adminContact = "Indica el contacto de la administración.";
     }
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       setIsSubmitting(false);
+      
+      // Scroll to first error
+      const firstErrorKey = Object.keys(newErrors)[0];
+      const errorEl = document.getElementsByName(firstErrorKey)[0] || document.getElementById(firstErrorKey);
+      if (errorEl) {
+        errorEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
       return;
     }
 
-    const response = await submitContactForm(requestData);
+    // Armar FormData definitivo para enviar los archivos
+    const submissionData = new FormData();
+    submissionData.append("name", name);
+    submissionData.append("role", role);
+    submissionData.append("email", email);
+    submissionData.append("phone", phone);
+    submissionData.append("establishmentType", estType);
+    submissionData.append("address", address);
+    submissionData.append("frequencyHoursDays", frequency);
+    submissionData.append("preferredSchedule", schedule);
+    submissionData.append("hasCurrentService", hasCurrentService);
+    submissionData.append("estimatedStartDate", start);
+    submissionData.append("message", message);
+
+    if (estType.toLowerCase() === "consorcio") {
+      submissionData.append("adminName", adminName);
+      submissionData.append("adminAddress", adminAddress);
+      submissionData.append("adminContact", adminContact);
+    }
+
+    // Agregar fotos desde el estado de React
+    selectedFiles.forEach(file => {
+      submissionData.append("photos", file);
+    });
+
+    const response = await submitQuoteForm(submissionData);
 
     setIsSubmitting(false);
     if (response.success) {
       setFeedback({ type: 'success', message: response.message });
       form.reset();
+      setSelectedFiles([]);
+      setPreviews([]);
+      setEstablishmentType("");
+      setHasCurrentService("");
       setTimeout(() => setFeedback({ type: null, message: '' }), 8000);
     } else {
       setFeedback({ type: 'error', message: response.message });
@@ -60,7 +194,7 @@ export default function Contact() {
   }
 
   return (
-    <section id="contacto" className="py-24 bg-brand-50 dark:bg-slate-950 relative overflow-x-clip">
+    <section id="contacto" className="py-24 bg-brand-50 dark:bg-slate-950 relative overflow-x-clip border-t border-brand-100 dark:border-slate-900">
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-teal-200/20 dark:bg-brand-500/5 blur-[120px] rounded-full pointer-events-none -translate-y-1/2" />
 
       <div className="container mx-auto px-6 max-w-6xl relative z-10">
@@ -71,7 +205,7 @@ export default function Contact() {
             viewport={{ once: true, amount: 0, margin: "0px 0px 400px 0px" }}
             className="text-4xl md:text-5xl font-extrabold text-slate-800 dark:text-white mb-6"
           >
-            ¿Hablamos sobre tu <span className="text-teal-600 dark:text-brand-400">Empresa</span>?
+            Contanos qué <span className="text-brand-600 dark:text-brand-400">buscás</span>
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -80,140 +214,425 @@ export default function Contact() {
             transition={{ delay: 0.1 }}
             className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto font-medium"
           >
-            Queremos conocer en detalle tus necesidades para ofrecerte la solución de limpieza que tus consorcios u oficinas merecen, con presupuesto cerrado y claro.
+            Completá este formulario detallado y diseñaremos una propuesta a tu medida. 
+            Presupuesto cerrado, transparente y sin sorpresas.
           </motion.p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-16 items-start">
+        <div className="grid lg:grid-cols-12 gap-12 items-start">
+          {/* Canales laterales */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0, margin: "0px 0px 400px 0px" }}
-            className="space-y-8"
+            className="lg:col-span-4 space-y-8 lg:sticky lg:top-28"
           >
-            <div className="bg-white/80 dark:bg-slate-900 p-8 md:p-10 rounded-[3rem] border border-brand-100 dark:border-slate-800 shadow-xl shadow-brand-200/20 dark:shadow-none backdrop-blur-md">
-              <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-8">Nuestros Canales</h3>
-              <div className="space-y-8">
-                {/* WhatsApp — Canal principal */}
+            <div className="bg-white/80 dark:bg-slate-900 p-8 rounded-[2.5rem] border border-brand-100 dark:border-slate-800 shadow-xl backdrop-blur-md">
+              <h3 className="text-xl font-bold text-slate-850 dark:text-white mb-6">Canales Directos</h3>
+              <div className="space-y-6">
+                
+                {/* WhatsApp */}
                 <div className="flex items-start gap-4 group">
-                  <div className="w-14 h-14 shrink-0 rounded-[1.2rem] bg-[#25D366]/10 dark:bg-[#25D366]/15 flex items-center justify-center text-[#25D366] border border-[#25D366]/20 group-hover:scale-105 transition-transform">
-                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                  <div className="w-12 h-12 shrink-0 rounded-2xl bg-[#25D366]/10 dark:bg-[#25D366]/15 flex items-center justify-center text-[#25D366] border border-[#25D366]/20 group-hover:scale-105 transition-transform">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
                       <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.015c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.82 9.82 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
                     </svg>
                   </div>
-                  <div className="mt-1">
-                    <p className="text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">Escribinos directo</p>
+                  <div>
+                    <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 mb-0.5">Asesoramiento Comercial</p>
                     <a
                       href="https://wa.me/5492235220338?text=Hola%20Ariana!%20Vengo%20de%20la%20pagina%20web%20y%20me%20gustar%C3%ADa%20hacer%20una%20consulta%20institucional."
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="block text-xl font-bold text-[#25D366] hover:text-[#20bd5a] transition-colors"
+                      className="block text-base font-bold text-[#25D366] hover:underline"
                     >
                       WhatsApp Ariana
                     </a>
-                    <p className="text-xs text-slate-500 dark:text-slate-500 mt-1 font-medium">Respuesta rápida personalizada</p>
                   </div>
                 </div>
 
                 {/* Email */}
                 <div className="flex items-start gap-4 group">
-                  <div className="w-14 h-14 shrink-0 rounded-[1.2rem] bg-brand-50 dark:bg-brand-900/40 flex items-center justify-center text-brand-600 dark:text-brand-400 border border-brand-100 dark:border-slate-700 group-hover:scale-105 transition-transform">
-                    <Mail className="w-6 h-6" />
+                  <div className="w-12 h-12 shrink-0 rounded-2xl bg-brand-50 dark:bg-slate-800 flex items-center justify-center text-brand-650 dark:text-brand-400 border border-brand-100 dark:border-slate-700 group-hover:scale-105 transition-transform">
+                    <Mail className="w-5 h-5" />
                   </div>
-                  <div className="mt-1">
-                    <p className="text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">O si prefieres escribirnos</p>
-                    <a href="mailto:info@arianaservicios.com.ar" className="text-lg font-bold text-slate-800 dark:text-white hover:text-brand-600 dark:hover:text-brand-400 transition-colors break-all">
+                  <div>
+                    <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 mb-0.5">Escríbinos por Email</p>
+                    <a href="mailto:info@arianaservicios.com.ar" className="text-base font-bold text-slate-800 dark:text-white hover:text-brand-600 transition-colors break-all leading-tight block">
                       info@arianaservicios.com.ar
                     </a>
                   </div>
                 </div>
 
-                {/* Ubicación y horarios */}
-                <div className="flex items-start gap-4 group">
-                  <div className="w-14 h-14 shrink-0 rounded-[1.2rem] bg-amber-50 dark:bg-brand-900/40 flex items-center justify-center text-amber-600 dark:text-amber-400 border border-amber-100 dark:border-slate-700 group-hover:scale-105 transition-transform">
-                    <MapPin className="w-6 h-6" />
+                {/* Ubicación */}
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 shrink-0 rounded-2xl bg-amber-50 dark:bg-slate-800 flex items-center justify-center text-amber-600 dark:text-amber-400 border border-amber-100 dark:border-slate-700">
+                    <MapPin className="w-5 h-5" />
                   </div>
-                  <div className="mt-1">
-                    <p className="text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">Tu zona es nuestra zona</p>
-                    <p className="text-lg font-bold text-slate-800 dark:text-white leading-tight">Todo Mar del Plata</p>
-                    <p className="text-[0.80rem] text-brand-600 dark:text-brand-400 mt-2 font-medium">Atendemos peticiones LUN a VIE (10 a 18 hs). <br/>Y ante urgencias, cubrimos a nuestros clientes 365 días.</p>
+                  <div>
+                    <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 mb-0.5">Zona de Cobertura</p>
+                    <p className="text-base font-bold text-slate-850 dark:text-white">Mar del Plata y alrededores</p>
                   </div>
                 </div>
+
               </div>
+            </div>
+
+            {/* Tarjeta de Garantía */}
+            <div className="bg-gradient-to-br from-brand-600 to-brand-700 dark:from-slate-900 dark:to-slate-800 p-8 rounded-[2.5rem] text-white shadow-xl">
+              <ShieldCheck className="w-10 h-10 mb-4 text-white dark:text-brand-400" />
+              <h4 className="text-lg font-bold mb-2">Protección de Datos</h4>
+              <p className="text-sm text-brand-50 dark:text-slate-350 leading-relaxed font-medium">
+                Toda la información y fotos cargadas en este formulario son tratadas bajo estricta confidencialidad comercial para la elaboración de la oferta. Ariana Servicios jamás compartirá sus datos ni le enviará spam publicitario.
+              </p>
             </div>
           </motion.div>
 
+          {/* Formulario Principal */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0, margin: "0px 0px 400px 0px" }}
-            className="p-8 lg:p-10 bg-white dark:bg-slate-900 rounded-[3rem] border border-brand-100 dark:border-slate-800 shadow-xl relative"
+            className="lg:col-span-8 p-8 md:p-10 bg-white dark:bg-slate-900 rounded-[3rem] border border-brand-100 dark:border-slate-800 shadow-xl"
           >
-            <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-6">Contanos qué buscás</h3>
+            <h3 className="text-2xl font-bold text-slate-850 dark:text-white mb-8 flex items-center gap-3">
+              <Building2 className="w-6 h-6 text-brand-600 dark:text-brand-400" />
+              Presupuesto de Limpieza Corporativa
+            </h3>
 
             <form className="space-y-6" onSubmit={handleSubmit} noValidate>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              
+              {/* Bloque 1: Solicitante */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-slate-600 dark:text-slate-300">Nombre / Consorcio *</label>
+                  <label className="text-sm font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
+                    <User className="w-4 h-4 text-slate-400" /> Nombre y Apellido *
+                  </label>
                   <input
                     name="name"
                     type="text"
-                    className={`w-full px-5 py-4 rounded-[1.5rem] border bg-brand-50/50 dark:bg-slate-800 text-slate-800 dark:text-white outline-none transition-all disabled:opacity-50 ${errors.name ? 'border-red-400 focus:ring-2 focus:ring-red-400' : 'border-brand-100 dark:border-slate-700 focus:ring-2 focus:ring-teal-500 dark:focus:ring-brand-500 focus:border-teal-500 dark:focus:border-brand-500'}`}
-                    placeholder="¿Quién nos contacta?"
+                    className={`w-full px-5 py-4 rounded-2xl border bg-brand-50/20 dark:bg-slate-850 text-slate-850 dark:text-white outline-none transition-all disabled:opacity-50 ${errors.name ? 'border-red-400 focus:ring-2 focus:ring-red-400' : 'border-brand-100 dark:border-slate-750 focus:ring-2 focus:ring-brand-500'}`}
+                    placeholder="Ej. Juan Pérez"
                     disabled={isSubmitting}
                   />
-                  {errors.name && <p className="text-xs text-red-500 flex items-center gap-1 mt-1"><AlertCircle className="w-3 h-3" />{errors.name}</p>}
+                  {errors.name && <p className="text-xs text-red-500 flex items-center gap-1 mt-1"><AlertCircle className="w-3.5 h-3.5" />{errors.name}</p>}
                 </div>
+
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-slate-600 dark:text-slate-300">Tu teléfono</label>
+                  <label className="text-sm font-bold text-slate-700 dark:text-slate-300">Cargo que ocupa *</label>
+                  <select
+                    name="role"
+                    defaultValue=""
+                    className={`w-full px-5 py-4 rounded-2xl border bg-brand-50/20 dark:bg-slate-850 text-slate-800 dark:text-white outline-none transition-all disabled:opacity-50 appearance-none ${errors.role ? 'border-red-400 focus:ring-2 focus:ring-red-400' : 'border-brand-100 dark:border-slate-750 focus:ring-2 focus:ring-brand-500'}`}
+                    disabled={isSubmitting}
+                  >
+                    <option value="" disabled className="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200">Seleccione su cargo...</option>
+                    <option value="Propietario" className="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200">Propietario</option>
+                    <option value="Gerente" className="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200">Gerente</option>
+                    <option value="Administrador" className="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200">Administrador / Administradora</option>
+                    <option value="Encargado / Supervisor" className="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200">Encargado o Supervisor</option>
+                    <option value="Miembro de Consorcio" className="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200">Miembro de Consorcio / Propietario Edificio</option>
+                    <option value="Otro" className="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200">Otro</option>
+                  </select>
+                  {errors.role && <p className="text-xs text-red-500 flex items-center gap-1 mt-1"><AlertCircle className="w-3.5 h-3.5" />{errors.role}</p>}
+                </div>
+              </div>
+
+              {/* Bloque 2: Datos de Contacto */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="text-sm font-bold text-slate-700 dark:text-slate-300">Email de contacto *</label>
+                  <input
+                    name="email"
+                    type="email"
+                    className={`w-full px-5 py-4 rounded-2xl border bg-brand-50/20 dark:bg-slate-850 text-slate-850 dark:text-white outline-none transition-all disabled:opacity-50 ${errors.email ? 'border-red-400 focus:ring-2 focus:ring-red-400' : 'border-brand-100 dark:border-slate-750 focus:ring-2 focus:ring-brand-500'}`}
+                    placeholder="ejemplo@correo.com"
+                    disabled={isSubmitting}
+                  />
+                  {errors.email && <p className="text-xs text-red-500 flex items-center gap-1 mt-1"><AlertCircle className="w-3.5 h-3.5" />{errors.email}</p>}
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-bold text-slate-700 dark:text-slate-300">Teléfono móvil / WhatsApp *</label>
                   <input
                     name="phone"
-                    type="text"
-                    className="w-full px-5 py-4 rounded-[1.5rem] border border-brand-100 dark:border-slate-700 bg-brand-50/50 dark:bg-slate-800 text-slate-800 dark:text-white focus:ring-2 focus:ring-teal-500 dark:focus:ring-brand-500 focus:border-teal-500 dark:focus:border-brand-500 outline-none transition-all disabled:opacity-50"
+                    type="tel"
+                    className={`w-full px-5 py-4 rounded-2xl border bg-brand-50/20 dark:bg-slate-850 text-slate-850 dark:text-white outline-none transition-all disabled:opacity-50 ${errors.phone ? 'border-red-400 focus:ring-2 focus:ring-red-400' : 'border-brand-100 dark:border-slate-750 focus:ring-2 focus:ring-brand-500'}`}
                     placeholder="Ej. 223 5123456"
                     disabled={isSubmitting}
                   />
+                  {errors.phone && <p className="text-xs text-red-500 flex items-center gap-1 mt-1"><AlertCircle className="w-3.5 h-3.5" />{errors.phone}</p>}
                 </div>
               </div>
 
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-slate-600 dark:text-slate-300">Un correo o email *</label>
-                <input
-                  name="email"
-                  type="email"
-                  className={`w-full px-5 py-4 rounded-[1.5rem] border bg-brand-50/50 dark:bg-slate-800 text-slate-800 dark:text-white outline-none transition-all disabled:opacity-50 ${errors.email ? 'border-red-400 focus:ring-2 focus:ring-red-400' : 'border-brand-100 dark:border-slate-700 focus:ring-2 focus:ring-teal-500 dark:focus:ring-brand-500 focus:border-teal-500 dark:focus:border-brand-500'}`}
-                  placeholder="Aquí te responderemos"
-                  disabled={isSubmitting}
-                />
-                {errors.email && <p className="text-xs text-red-500 flex items-center gap-1 mt-1"><AlertCircle className="w-3 h-3" />{errors.email}</p>}
+              {/* Bloque 3: Establecimiento */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="text-sm font-bold text-slate-700 dark:text-slate-300">Tipo de establecimiento *</label>
+                  <select
+                    name="establishmentType"
+                    value={establishmentType}
+                    onChange={(e) => setEstablishmentType(e.target.value)}
+                    className={`w-full px-5 py-4 rounded-2xl border bg-brand-50/20 dark:bg-slate-850 text-slate-800 dark:text-white outline-none transition-all disabled:opacity-50 appearance-none ${errors.establishmentType ? 'border-red-400 focus:ring-2 focus:ring-red-400' : 'border-brand-100 dark:border-slate-750 focus:ring-2 focus:ring-brand-500'}`}
+                    disabled={isSubmitting}
+                  >
+                    <option value="" disabled className="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200">Seleccione el tipo...</option>
+                    <option value="Consorcio" className="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200">Consorcio de Edificio</option>
+                    <option value="Oficina" className="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200">Oficinas Comerciales / Corporativo</option>
+                    <option value="Local Comercial" className="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200">Local Comercial / Salón</option>
+                    <option value="Entidad Bancaria" className="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200">Entidad Bancaria / Financiera</option>
+                    <option value="Establecimiento Educativo" className="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200">Establecimiento Educativo / Colegio</option>
+                    <option value="Clinica / Centro Salud" className="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200">Clínica o Centro de Salud</option>
+                    <option value="Final de Obra" className="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200">Final de Obra / Limpieza Única</option>
+                    <option value="Otro" className="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200">Otro Establecimiento</option>
+                  </select>
+                  {errors.establishmentType && <p className="text-xs text-red-500 flex items-center gap-1 mt-1"><AlertCircle className="w-3.5 h-3.5" />{errors.establishmentType}</p>}
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-bold text-slate-700 dark:text-slate-300">Dirección del establecimiento *</label>
+                  <input
+                    name="address"
+                    type="text"
+                    className={`w-full px-5 py-4 rounded-2xl border bg-brand-50/20 dark:bg-slate-850 text-slate-850 dark:text-white outline-none transition-all disabled:opacity-50 ${errors.address ? 'border-red-400 focus:ring-2 focus:ring-red-400' : 'border-brand-100 dark:border-slate-750 focus:ring-2 focus:ring-brand-500'}`}
+                    placeholder="Calle, altura e indicaciones"
+                    disabled={isSubmitting}
+                  />
+                  {errors.address && <p className="text-xs text-red-500 flex items-center gap-1 mt-1"><AlertCircle className="w-3.5 h-3.5" />{errors.address}</p>}
+                </div>
               </div>
 
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-slate-600 dark:text-slate-300">Ubicación a cotizar</label>
-                <input
-                  name="address"
-                  type="text"
-                  className="w-full px-5 py-4 rounded-[1.5rem] border border-brand-100 dark:border-slate-700 bg-brand-50/50 dark:bg-slate-800 text-slate-800 dark:text-white focus:ring-2 focus:ring-teal-500 dark:focus:ring-brand-500 focus:border-teal-500 dark:focus:border-brand-500 outline-none transition-all disabled:opacity-50"
-                  placeholder="Ej. Barrio Centro, Parque Luro, etc."
-                  disabled={isSubmitting}
-                />
+              {/* Lógica Condicional: Consorcio */}
+              <AnimatePresence>
+                {establishmentType.toLowerCase() === "consorcio" && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="overflow-hidden"
+                  >
+                    <div className="p-6 rounded-2xl bg-brand-100/50 dark:bg-slate-850 border border-brand-200 dark:border-slate-800 space-y-4 my-2">
+                      <h4 className="text-sm font-bold text-brand-700 dark:text-brand-400 uppercase tracking-wider mb-2">
+                        Datos obligatorios de la Administración a Cargo
+                      </h4>
+                      
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div className="space-y-1">
+                          <label className="text-xs font-bold text-slate-600 dark:text-slate-350">Nombre Administración *</label>
+                          <input
+                            name="adminName"
+                            type="text"
+                            className={`w-full px-4 py-3 rounded-xl border bg-white dark:bg-slate-900 text-slate-850 dark:text-white outline-none text-sm ${errors.adminName ? 'border-red-400 focus:ring-1 focus:ring-red-400' : 'border-brand-200 dark:border-slate-750 focus:ring-1 focus:ring-brand-500'}`}
+                            placeholder="Ej. Adm. Patiño"
+                            disabled={isSubmitting}
+                          />
+                          {errors.adminName && <p className="text-[10px] text-red-500 flex items-center gap-0.5 mt-0.5"><AlertCircle className="w-3 h-3" />{errors.adminName}</p>}
+                        </div>
+
+                        <div className="space-y-1">
+                          <label className="text-xs font-bold text-slate-600 dark:text-slate-350">Dirección Adm. *</label>
+                          <input
+                            name="adminAddress"
+                            type="text"
+                            className={`w-full px-4 py-3 rounded-xl border bg-white dark:bg-slate-900 text-slate-850 dark:text-white outline-none text-sm ${errors.adminAddress ? 'border-red-400 focus:ring-1 focus:ring-red-400' : 'border-brand-200 dark:border-slate-750 focus:ring-1 focus:ring-brand-500'}`}
+                            placeholder="Ej. La Rioja 1520"
+                            disabled={isSubmitting}
+                          />
+                          {errors.adminAddress && <p className="text-[10px] text-red-500 flex items-center gap-0.5 mt-0.5"><AlertCircle className="w-3 h-3" />{errors.adminAddress}</p>}
+                        </div>
+
+                        <div className="space-y-1">
+                          <label className="text-xs font-bold text-slate-600 dark:text-slate-350">Contacto Adm. (Tel/Mail) *</label>
+                          <input
+                            name="adminContact"
+                            type="text"
+                            className={`w-full px-4 py-3 rounded-xl border bg-white dark:bg-slate-900 text-slate-850 dark:text-white outline-none text-sm ${errors.adminContact ? 'border-red-400 focus:ring-1 focus:ring-red-400' : 'border-brand-200 dark:border-slate-750 focus:ring-1 focus:ring-brand-500'}`}
+                            placeholder="Ej. 223 491-xxxx"
+                            disabled={isSubmitting}
+                          />
+                          {errors.adminContact && <p className="text-[10px] text-red-500 flex items-center gap-0.5 mt-0.5"><AlertCircle className="w-3 h-3" />{errors.adminContact}</p>}
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {/* Bloque 4: Frecuencia y Horario */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="text-sm font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
+                    <Clock className="w-4 h-4 text-slate-400" /> Frecuencia e Intensidad *
+                  </label>
+                  <input
+                    name="frequencyHoursDays"
+                    type="text"
+                    className={`w-full px-5 py-4 rounded-2xl border bg-brand-50/20 dark:bg-slate-850 text-slate-850 dark:text-white outline-none transition-all disabled:opacity-50 ${errors.frequencyHoursDays ? 'border-red-400 focus:ring-2 focus:ring-red-400' : 'border-brand-100 dark:border-slate-750 focus:ring-2 focus:ring-brand-500'}`}
+                    placeholder="Ej. Lunes a Viernes, 4 hs diarias"
+                    disabled={isSubmitting}
+                  />
+                  {errors.frequencyHoursDays && <p className="text-xs text-red-500 flex items-center gap-1 mt-1"><AlertCircle className="w-3.5 h-3.5" />{errors.frequencyHoursDays}</p>}
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-bold text-slate-700 dark:text-slate-300">Horarios y días de preferencia *</label>
+                  <input
+                    name="preferredSchedule"
+                    type="text"
+                    className={`w-full px-5 py-4 rounded-2xl border bg-brand-50/20 dark:bg-slate-850 text-slate-850 dark:text-white outline-none transition-all disabled:opacity-50 ${errors.preferredSchedule ? 'border-red-400 focus:ring-2 focus:ring-red-400' : 'border-brand-100 dark:border-slate-750 focus:ring-2 focus:ring-brand-500'}`}
+                    placeholder="Ej. Mañana (08:00 a 12:00)"
+                    disabled={isSubmitting}
+                  />
+                  {errors.preferredSchedule && <p className="text-xs text-red-500 flex items-center gap-1 mt-1"><AlertCircle className="w-3.5 h-3.5" />{errors.preferredSchedule}</p>}
+                </div>
               </div>
 
+              {/* Bloque 5: Estado Actual e Inicio */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                <div className="space-y-2">
+                  <label className="text-sm font-bold text-slate-700 dark:text-slate-300 block">¿Cuenta actualmente con servicio de limpieza? *</label>
+                  <div className="flex items-center gap-6 py-2">
+                    <label className="flex items-center gap-2 cursor-pointer font-medium text-slate-700 dark:text-slate-300">
+                      <input
+                        type="radio"
+                        name="hasCurrentService"
+                        value="si"
+                        checked={hasCurrentService === "si"}
+                        onChange={() => setHasCurrentService("si")}
+                        className="w-4 h-4 text-brand-500 focus:ring-brand-500 border-brand-200 dark:border-slate-700"
+                        disabled={isSubmitting}
+                      />
+                      Sí
+                    </label>
+                    <label className="flex items-center gap-2 cursor-pointer font-medium text-slate-700 dark:text-slate-300">
+                      <input
+                        type="radio"
+                        name="hasCurrentService"
+                        value="no"
+                        checked={hasCurrentService === "no"}
+                        onChange={() => setHasCurrentService("no")}
+                        className="w-4 h-4 text-brand-500 focus:ring-brand-500 border-brand-200 dark:border-slate-700"
+                        disabled={isSubmitting}
+                      />
+                      No
+                    </label>
+                  </div>
+                  {errors.hasCurrentService && <p className="text-xs text-red-500 flex items-center gap-1 mt-1"><AlertCircle className="w-3.5 h-3.5" />{errors.hasCurrentService}</p>}
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
+                    <Calendar className="w-4 h-4 text-slate-400" /> Fecha estimada de inicio *
+                  </label>
+                  <input
+                    name="estimatedStartDate"
+                    type="date"
+                    className={`w-full px-5 py-4 rounded-2xl border bg-brand-50/20 dark:bg-slate-850 text-slate-850 dark:text-white outline-none transition-all disabled:opacity-50 ${errors.estimatedStartDate ? 'border-red-400 focus:ring-2 focus:ring-red-400' : 'border-brand-100 dark:border-slate-750 focus:ring-2 focus:ring-brand-500'}`}
+                    disabled={isSubmitting}
+                  />
+                  {errors.estimatedStartDate && <p className="text-xs text-red-500 flex items-center gap-1 mt-1"><AlertCircle className="w-3.5 h-3.5" />{errors.estimatedStartDate}</p>}
+                </div>
+              </div>
+
+              {/* Bloque 6: Fotos del lugar */}
+              <div className="space-y-3">
+                <label className="text-sm font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
+                  <Upload className="w-4 h-4 text-slate-400" /> Adjuntar fotos del lugar (Opcional)
+                </label>
+                <p className="text-xs text-slate-500 dark:text-slate-400">
+                  Ayúdanos a evaluar el estado subiendo fotos (fachada, interiores, patios). Podés subir hasta {MAX_FILES} imágenes (PNG o JPG), máximo {MAX_SIZE_MB}MB por foto.
+                </p>
+
+                {/* Botón de Carga */}
+                <div className="flex flex-wrap gap-4 items-center mt-2">
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    disabled={selectedFiles.length >= MAX_FILES || isSubmitting}
+                    className="px-6 py-4 border border-dashed border-brand-300 dark:border-slate-700 hover:border-brand-500 dark:hover:border-brand-500 rounded-2xl text-sm font-bold text-slate-600 dark:text-slate-350 hover:bg-brand-50/30 dark:hover:bg-slate-850 flex items-center gap-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <Upload className="w-4 h-4 text-brand-500" />
+                    Seleccionar fotos ({selectedFiles.length}/{MAX_FILES})
+                  </button>
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    multiple
+                    accept="image/*"
+                    onChange={handleFileChange}
+                    className="hidden"
+                    disabled={isSubmitting}
+                  />
+                </div>
+
+                {errors.photos && <p className="text-xs text-red-500 flex items-center gap-1 mt-1"><AlertCircle className="w-3.5 h-3.5" />{errors.photos}</p>}
+
+                {/* Previsualización de imágenes */}
+                {previews.length > 0 && (
+                  <div className="grid grid-cols-2 sm:grid-cols-5 gap-4 mt-4 bg-brand-50/40 dark:bg-slate-950/30 p-4 rounded-2xl border border-brand-100 dark:border-slate-850">
+                    {previews.map((url, idx) => (
+                      <div key={idx} className="relative h-24 rounded-xl overflow-hidden border border-brand-100 dark:border-slate-800 shadow bg-white dark:bg-slate-900 group">
+                        <img
+                          src={url}
+                          alt={`Previsualización ${idx + 1}`}
+                          className="w-full h-full object-cover"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => removeFile(idx)}
+                          className="absolute top-1 right-1 bg-black/60 hover:bg-red-650 text-white rounded-full p-1 transition-colors"
+                          title="Eliminar foto"
+                          disabled={isSubmitting}
+                        >
+                          <X className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Bloque 7: Detalle / Mensaje */}
               <div className="space-y-2">
-                <label className="text-sm font-medium text-slate-600 dark:text-slate-300">¿Qué podemos hacer por ti? *</label>
+                <label className="text-sm font-bold text-slate-700 dark:text-slate-300">Detalles de la limpieza / Requerimientos específicos *</label>
                 <textarea
                   name="message"
                   rows={4}
-                  className={`w-full px-5 py-4 rounded-[1.5rem] border bg-brand-50/50 dark:bg-slate-800 text-slate-800 dark:text-white outline-none transition-all resize-none disabled:opacity-50 ${errors.message ? 'border-red-400 focus:ring-2 focus:ring-red-400' : 'border-brand-100 dark:border-slate-700 focus:ring-2 focus:ring-teal-500 dark:focus:ring-brand-500 focus:border-teal-500 dark:focus:border-brand-500'}`}
-                  placeholder="Detállanos metros, prioridades o frecuencia de limpieza..."
+                  className={`w-full px-5 py-4 rounded-2xl border bg-brand-50/20 dark:bg-slate-850 text-slate-850 dark:text-white outline-none transition-all resize-none disabled:opacity-50 ${errors.message ? 'border-red-400 focus:ring-2 focus:ring-red-400' : 'border-brand-100 dark:border-slate-750 focus:ring-2 focus:ring-brand-500'}`}
+                  placeholder="Ej. Contar con limpieza de vidrios quincenal, pisos cerámicos que requieren encerado, limpieza de 2 sanitarios, etc..."
                   disabled={isSubmitting}
                 ></textarea>
-                {errors.message && <p className="text-xs text-red-500 flex items-center gap-1 mt-1"><AlertCircle className="w-3 h-3" />{errors.message}</p>}
+                {errors.message && <p className="text-xs text-red-500 flex items-center gap-1 mt-1"><AlertCircle className="w-3.5 h-3.5" />{errors.message}</p>}
               </div>
 
+              {/* Bloque 8: Cláusula de Privacidad y Spam */}
+              <div className="border-t border-brand-100 dark:border-slate-800 pt-6">
+                <div className="flex items-start gap-3">
+                  <input
+                    type="checkbox"
+                    name="privacyAccepted"
+                    id="privacyAccepted"
+                    className="w-4 h-4 mt-1 text-brand-500 focus:ring-brand-500 border-brand-200 dark:border-slate-700 rounded cursor-pointer"
+                    disabled={isSubmitting}
+                  />
+                  <div className="space-y-1">
+                    <label htmlFor="privacyAccepted" className="text-xs sm:text-sm font-semibold text-slate-650 dark:text-slate-300 cursor-pointer">
+                      Garantía de Privacidad y Spam *
+                    </label>
+                    <p className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 flex items-center gap-1">
+                      <Lock className="w-3 h-3 text-brand-500 inline-block shrink-0" />
+                      Acepto que mis datos y fotos se usarán con absoluta reserva comercial. Ariana Servicios garantiza que no recibiré Spam publicitario.
+                    </p>
+                  </div>
+                </div>
+                {errors.privacyAccepted && <p className="text-xs text-red-500 flex items-center gap-1 mt-2"><AlertCircle className="w-3.5 h-3.5" />{errors.privacyAccepted}</p>}
+              </div>
+
+              {/* Feedback y Botón */}
               {feedback.type && (
-                <div className={`p-5 rounded-[1.5rem] flex items-center gap-3 text-sm font-medium ${feedback.type === 'success' ? 'bg-teal-50 text-teal-800 dark:bg-emerald-900/30 dark:text-emerald-400 border border-teal-200 dark:border-emerald-800' : 'bg-red-50 text-red-800 dark:bg-red-900/30 dark:text-red-400 border border-red-200 dark:border-red-800'}`}>
-                  {feedback.type === 'success' ? <CheckCircle2 className="w-6 h-6 shrink-0" /> : <AlertCircle className="w-6 h-6 shrink-0" />}
+                <div className={`p-5 rounded-2xl flex items-center gap-3 text-sm font-medium border ${feedback.type === 'success' ? 'bg-teal-50 text-teal-800 dark:bg-emerald-950/30 dark:text-emerald-400 border-teal-200 dark:border-emerald-850' : 'bg-red-50 text-red-800 dark:bg-red-950/30 dark:text-red-400 border-red-200 dark:border-red-850'}`}>
+                  {feedback.type === 'success' ? <CheckCircle2 className="w-5 h-5 shrink-0" /> : <AlertCircle className="w-5 h-5 shrink-0" />}
                   <p>{feedback.message}</p>
                 </div>
               )}
@@ -221,16 +640,16 @@ export default function Contact() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full py-5 bg-brand-500 hover:bg-brand-600 dark:bg-brand-600 dark:hover:bg-brand-700 disabled:bg-slate-300 dark:disabled:bg-slate-800 text-white font-bold rounded-[2rem] text-lg transition-all hover:scale-[1.02] active:scale-[0.98] disabled:hover:scale-100 disabled:cursor-not-allowed shadow-xl shadow-brand-500/20 flex items-center justify-center gap-3 group"
+                className="w-full py-5 bg-brand-500 hover:bg-brand-600 dark:bg-brand-650 dark:hover:bg-brand-700 disabled:bg-slate-300 dark:disabled:bg-slate-800 text-white font-bold rounded-2xl text-lg transition-all hover:scale-[1.01] active:scale-[0.99] disabled:hover:scale-100 disabled:cursor-not-allowed shadow-xl shadow-brand-500/10 flex items-center justify-center gap-3 group"
               >
                 {isSubmitting ? (
                   <>
                     <Loader2 className="w-6 h-6 animate-spin" />
-                    Preparando envío...
+                    Procesando presupuesto y adjuntos...
                   </>
                 ) : (
                   <>
-                    Hablar con Ariana
+                    Solicitar Presupuesto Cerrado
                     <Send className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </>
                 )}

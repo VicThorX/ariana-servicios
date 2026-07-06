@@ -1,14 +1,23 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import Logo from "@/components/ui/Logo";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const pathname = usePathname();
+
+  // Helper para generar enlaces inteligentes
+  const getLinkHref = (hash: string) => {
+    return pathname === "/" ? hash : `/${hash}`;
+  };
 
   // WhatsApp link
   const wppLink = "https://wa.me/5492235220338?text=Hola%20Ariana!%20Vengo%20de%20la%20pagina%20web%20y%20me%20gustar%C3%ADa%20hacer%20una%20consulta%20institucional.";
 
   return (
-    <footer className="bg-slate-950 text-slate-400 py-16 border-t border-slate-800 relative overflow-hidden">
+    <footer className="bg-slate-950 text-slate-450 py-16 border-t border-slate-900 relative overflow-hidden">
       <div className="container mx-auto px-6 max-w-6xl relative z-10">
         <div className="grid md:grid-cols-3 gap-12 lg:gap-24 mb-16">
           {/* Brand Col */}
@@ -23,19 +32,19 @@ export default function Footer() {
           <div>
             <h4 className="text-white font-bold mb-6 tracking-wide uppercase text-sm">Navegación</h4>
             <ul className="space-y-4 text-sm font-medium">
-              <li><Link href="#nosotros" className="hover:text-brand-400 transition-colors flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-brand-500"></span> Quiénes Somos</Link></li>
-              <li><Link href="#clientes" className="hover:text-brand-400 transition-colors flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-brand-500"></span> Nuestros Clientes</Link></li>
-              <li><Link href="#servicios" className="hover:text-brand-400 transition-colors flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-brand-500"></span> Servicios Integrales</Link></li>
-              <li><Link href="#productos" className="hover:text-brand-400 transition-colors flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-brand-500"></span> Insumos y Productos</Link></li>
-              <li><Link href="#beneficios" className="hover:text-brand-400 transition-colors flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-brand-500"></span> Garantía de Confianza</Link></li>
+              <li><Link href={getLinkHref("#nosotros")} className="hover:text-brand-400 transition-colors flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-brand-500"></span> Quiénes Somos</Link></li>
+              <li><Link href={getLinkHref("#servicios")} className="hover:text-brand-400 transition-colors flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-brand-500"></span> Servicios Integrales</Link></li>
+              <li><Link href="/productos" className="hover:text-brand-400 transition-colors flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-brand-500"></span> Insumos y Tienda Virtual</Link></li>
+              <li><Link href="/trabaja-con-nosotros" className="hover:text-brand-400 transition-colors flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-brand-500"></span> Trabajá con Nosotros</Link></li>
+              <li><Link href={getLinkHref("#contacto")} className="hover:text-brand-400 transition-colors flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-brand-500"></span> Solicitar Presupuesto</Link></li>
             </ul>
           </div>
 
-          {/* Contact Col — WhatsApp only (no phone numbers) */}
+          {/* Contact Col — WhatsApp only */}
           <div>
             <h4 className="text-white font-bold mb-6 tracking-wide uppercase text-sm">Contacto</h4>
             <ul className="space-y-4 text-sm">
-              {/* WhatsApp — Canal principal */}
+              {/* WhatsApp */}
               <li className="flex items-center gap-3">
                 <a
                   href={wppLink}
@@ -56,17 +65,16 @@ export default function Footer() {
 
               {/* Email */}
               <li className="flex items-center gap-3 pt-2 text-brand-400">
-                <span className="w-8 h-8 rounded-full bg-brand-900/30 flex items-center justify-center border border-brand-800/50 shrink-0">✉️</span>
-                <a href="mailto:info@arianaservicios.com.ar" className="hover:underline font-medium">
+                <span className="w-8 h-8 rounded-full bg-brand-900/30 flex items-center justify-center border border-brand-850/50 shrink-0">✉️</span>
+                <a href="mailto:info@arianaservicios.com.ar" className="hover:underline font-semibold text-slate-350">
                   info@arianaservicios.com.ar
                 </a>
               </li>
 
               {/* Instagram */}
-              <li className="pt-4 mt-2 border-t border-slate-800/80">
-                {/* NOTA: Cambiar href="#" con el link real de instagram cuando la clienta lo provea */}
+              <li className="pt-4 mt-2 border-t border-slate-900">
                 <a href="#" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 group" aria-label="Nuestro Instagram corporativo">
-                  <span className="w-10 h-10 rounded-full bg-slate-900 flex items-center justify-center text-slate-400 hover:text-white hover:bg-brand-600 border border-slate-800 shadow-md transition-all group-hover:scale-110">
+                  <span className="w-10 h-10 rounded-full bg-slate-900 flex items-center justify-center text-slate-400 hover:text-white hover:bg-brand-600 border border-slate-850 shadow-md transition-all group-hover:scale-110">
                     <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
                       <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
@@ -82,7 +90,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-slate-800 text-xs text-slate-500">
+        <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-slate-900 text-xs text-slate-500">
           <p>&copy; {currentYear} Somos Ariana Limpieza. Mar del Plata.</p>
           <p className="mt-2 md:mt-0 font-medium">B2B Facility Management & Limpieza.</p>
         </div>
