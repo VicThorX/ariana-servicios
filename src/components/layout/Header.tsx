@@ -11,6 +11,7 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
+  const showBanner = pathname === "/productos";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -27,14 +28,16 @@ export default function Header() {
 
   return (
     <>
-      <div className="fixed top-0 left-0 right-0 z-50 bg-amber-500 text-white text-center py-2 px-4 text-[10px] md:text-xs font-bold flex items-center justify-center gap-2 shadow-sm select-none">
-        <span>🚧 <strong>Sitio en Desarrollo:</strong> Algunas funcionalidades de cotización y carrito están operando en modo de simulación y pruebas.</span>
-      </div>
+      {showBanner && (
+        <div className="fixed top-0 left-0 right-0 z-50 bg-amber-500 text-white text-center py-2 px-4 text-[10px] md:text-xs font-bold flex items-center justify-center gap-2 shadow-sm select-none">
+          <span>🚧 <strong>Sitio en Desarrollo:</strong> Algunas funcionalidades de cotización y carrito están operando en modo de simulación y pruebas.</span>
+        </div>
+      )}
       <header
         className={`fixed left-0 right-0 z-50 transition-all duration-500 ${
           scrolled
-            ? "glass shadow-sm py-3 top-8"
-            : "bg-transparent py-5 top-8"
+            ? `glass shadow-sm py-3 ${showBanner ? "top-8" : "top-0"}`
+            : `bg-transparent py-5 ${showBanner ? "top-8" : "top-0"}`
         }`}
       >
       <div className="container mx-auto px-6 flex items-center justify-between border-b-0">

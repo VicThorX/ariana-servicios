@@ -6,8 +6,8 @@ export class SubmitQuoteRequestUseCase {
 
   async execute(request: QuoteRequest): Promise<{ success: boolean; message: string }> {
     // 1. Validaciones básicas de Dominio
-    if (!request.name || !request.email || !request.establishmentType || !request.address || !request.message) {
-      return { success: false, message: "Nombre, email, tipo de establecimiento, dirección y mensaje son campos obligatorios." };
+    if (!request.name || !request.email || !request.establishmentType || !request.address) {
+      return { success: false, message: "Nombre, email, tipo de establecimiento y dirección son campos obligatorios." };
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
