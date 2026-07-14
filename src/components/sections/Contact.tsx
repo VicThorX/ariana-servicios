@@ -789,6 +789,7 @@ export default function Contact() {
               <div className="flex gap-4 pt-6 border-t border-brand-100 dark:border-slate-800">
                 {step > 1 && (
                   <button
+                    key="back-btn"
                     type="button"
                     onClick={prevStep}
                     disabled={isSubmitting}
@@ -800,6 +801,7 @@ export default function Contact() {
                 
                 {step < 3 ? (
                   <button
+                    key="next-btn"
                     type="button"
                     onClick={nextStep}
                     className="flex-1 py-4 bg-brand-500 hover:bg-brand-600 dark:bg-brand-650 dark:hover:bg-brand-700 text-white font-bold rounded-2xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-brand-500/10"
@@ -809,6 +811,7 @@ export default function Contact() {
                   </button>
                 ) : (
                   <button
+                    key="submit-btn"
                     type="submit"
                     disabled={isSubmitting}
                     className="flex-1 py-4 bg-brand-500 hover:bg-brand-600 dark:bg-brand-650 dark:hover:bg-brand-700 disabled:bg-slate-300 dark:disabled:bg-slate-800 text-white font-bold rounded-2xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-brand-500/10 disabled:cursor-not-allowed"
