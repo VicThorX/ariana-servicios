@@ -90,11 +90,21 @@ export default function Contact() {
     setPreviews(prev => prev.filter((_, i) => i !== index));
   };
 
-  // Validación local por paso
-  const validateStep = (currentStep: number): boolean => {
-    if (!formRef.current) return false;
-    const formFields = new FormData(formRef.current);
+  // Limpiar errores individuales de manera reactiva
+  const clearError = (field: string) => {
+    setErrors(prev => {
+      if (!prev[field]) return prev;
+      const copy = { ...prev };
+      delete copy[field];
+      return copy;
+    });
+  };
+
+  // Obtener errores por paso sin efectos secundarios directos
+  const getStepErrors = (currentStep: number): Record<string, string> => {
     const newErrors: Record<string, string> = {};
+    if (!formRef.current) return newErrors;
+    const formFields = new FormData(formRef.current);
 
     if (currentStep === 1) {
       const name = (formFields.get("name") as string || "").trim();
@@ -128,63 +138,65 @@ export default function Contact() {
       }
     }
 
-    setErrors(newErrors);
-    
-    if (Object.keys(newErrors).length > 0) {
-      // Hacer scroll al primer error dentro del paso
-      const firstErrorKey = Object.keys(newErrors)[0];
+    if (currentStep === 3) {
+      const frequency = (formFields.get("frequencyHoursDays") as string || "").trim();
+      const schedule = (formFields.get("preferredSchedule") as string || "").trim();
+      const privacyAccepted = !!formFields.get("privacyAccepted");
+
+      if (!frequency) newErrors.frequencyHoursDays = "Selecciona la frecuencia deseada.";
+      if (!schedule) newErrors.preferredSchedule = "Selecciona tu horario de preferencia.";
+      if (!hasCurrentService) newErrors.hasCurrentService = "Selecciona si cuentas actualmente con el servicio.";
+      if (!privacyAccepted) newErrors.privacyAccepted = "Debes aceptar la protección de datos y spam.";
+    }
+
+    return newErrors;
+  };
+
+  const nextStep = () => {
+    const stepErrors = getStepErrors(step);
+    if (Object.keys(stepErrors).length === 0) {
+      setErrors({}); // Limpiar errores acumulados antes de avanzar
+      setStep(prev => prev + 1);
+    } else {
+      setErrors(stepErrors);
+      const firstErrorKey = Object.keys(stepErrors)[0];
       const errorEl = document.getElementsByName(firstErrorKey)[0] || document.getElementById(firstErrorKey);
       if (errorEl) {
         errorEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
-      return false;
-    }
-    
-    return true;
-  };
-
-  const nextStep = () => {
-    if (validateStep(step)) {
-      setStep(prev => prev + 1);
     }
   };
 
   const prevStep = () => {
+    setErrors({}); // Limpiar errores al volver atrás para evitar alertas fuera de contexto
     setStep(prev => prev - 1);
   };
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setFeedback({ type: null, message: '' });
-    setErrors({});
 
-    // Validar paso 1 y 2 antes del paso 3 por si acaso
-    if (!validateStep(1)) {
+    // Validar Paso 1
+    const step1Errors = getStepErrors(1);
+    if (Object.keys(step1Errors).length > 0) {
+      setErrors(step1Errors);
       setStep(1);
       return;
     }
-    if (!validateStep(2)) {
+
+    // Validar Paso 2
+    const step2Errors = getStepErrors(2);
+    if (Object.keys(step2Errors).length > 0) {
+      setErrors(step2Errors);
       setStep(2);
       return;
     }
 
-    // Validaciones de Paso 3
-    if (!formRef.current) return;
-    const formFields = new FormData(formRef.current);
-    const frequency = (formFields.get("frequencyHoursDays") as string || "").trim();
-    const schedule = (formFields.get("preferredSchedule") as string || "").trim();
-    const privacyAccepted = formFields.get("privacyAccepted") === "on";
-
-    const newErrors: Record<string, string> = {};
-    if (!frequency) newErrors.frequencyHoursDays = "Selecciona la frecuencia deseada.";
-    if (!schedule) newErrors.preferredSchedule = "Selecciona tu horario de preferencia.";
-    if (!hasCurrentService) newErrors.hasCurrentService = "Selecciona si cuentas actualmente con el servicio.";
-    if (!privacyAccepted) newErrors.privacyAccepted = "Debes aceptar la protección de datos y spam.";
-
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      // Hacer scroll al primer error del paso 3
-      const firstErrorKey = Object.keys(newErrors)[0];
+    // Validar Paso 3
+    const step3Errors = getStepErrors(3);
+    if (Object.keys(step3Errors).length > 0) {
+      setErrors(step3Errors);
+      const firstErrorKey = Object.keys(step3Errors)[0];
       const errorEl = document.getElementsByName(firstErrorKey)[0] || document.getElementById(firstErrorKey);
       if (errorEl) {
         errorEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -192,7 +204,14 @@ export default function Contact() {
       return;
     }
 
+    // Si todo está ok, procedemos al envío sin errores en pantalla
+    setErrors({});
     setIsSubmitting(true);
+
+    if (!formRef.current) return;
+    const formFields = new FormData(formRef.current);
+    const frequency = (formFields.get("frequencyHoursDays") as string || "").trim();
+    const schedule = (formFields.get("preferredSchedule") as string || "").trim();
 
     const name = (formFields.get("name") as string || "").trim();
     const role = (formFields.get("role") as string || "").trim() || "No especificado";
@@ -402,6 +421,7 @@ export default function Contact() {
                     <input
                       name="name"
                       type="text"
+                      onChange={() => clearError("name")}
                       className={`w-full px-5 py-4 rounded-2xl border bg-brand-50/20 dark:bg-slate-850 text-slate-850 dark:text-white outline-none transition-all disabled:opacity-50 ${errors.name ? 'border-red-400 focus:ring-2 focus:ring-red-400' : 'border-brand-100 dark:border-slate-750 focus:ring-2 focus:ring-brand-500'}`}
                       placeholder="Ej. Juan Pérez"
                       disabled={isSubmitting}
@@ -434,6 +454,7 @@ export default function Contact() {
                     <input
                       name="email"
                       type="email"
+                      onChange={() => clearError("email")}
                       className={`w-full px-5 py-4 rounded-2xl border bg-brand-50/20 dark:bg-slate-850 text-slate-850 dark:text-white outline-none transition-all disabled:opacity-50 ${errors.email ? 'border-red-400 focus:ring-2 focus:ring-red-400' : 'border-brand-100 dark:border-slate-750 focus:ring-2 focus:ring-brand-500'}`}
                       placeholder="ejemplo@correo.com"
                       disabled={isSubmitting}
@@ -446,6 +467,7 @@ export default function Contact() {
                     <input
                       name="phone"
                       type="tel"
+                      onChange={() => clearError("phone")}
                       className={`w-full px-5 py-4 rounded-2xl border bg-brand-50/20 dark:bg-slate-850 text-slate-850 dark:text-white outline-none transition-all disabled:opacity-50 ${errors.phone ? 'border-red-400 focus:ring-2 focus:ring-red-400' : 'border-brand-100 dark:border-slate-750 focus:ring-2 focus:ring-brand-500'}`}
                       placeholder="Ej. 223 5123456"
                       disabled={isSubmitting}
@@ -466,7 +488,10 @@ export default function Contact() {
                     <select
                       name="establishmentType"
                       value={establishmentType}
-                      onChange={(e) => setEstablishmentType(e.target.value)}
+                      onChange={(e) => {
+                        setEstablishmentType(e.target.value);
+                        clearError("establishmentType");
+                      }}
                       className={`w-full px-5 py-4 rounded-2xl border bg-brand-50/20 dark:bg-slate-850 text-slate-800 dark:text-white outline-none transition-all disabled:opacity-50 appearance-none ${errors.establishmentType ? 'border-red-400 focus:ring-2 focus:ring-red-400' : 'border-brand-100 dark:border-slate-750 focus:ring-2 focus:ring-brand-500'}`}
                       disabled={isSubmitting}
                     >
@@ -488,6 +513,7 @@ export default function Contact() {
                     <input
                       name="address"
                       type="text"
+                      onChange={() => clearError("address")}
                       className={`w-full px-5 py-4 rounded-2xl border bg-brand-50/20 dark:bg-slate-850 text-slate-850 dark:text-white outline-none transition-all disabled:opacity-50 ${errors.address ? 'border-red-400 focus:ring-2 focus:ring-red-400' : 'border-brand-100 dark:border-slate-750 focus:ring-2 focus:ring-brand-500'}`}
                       placeholder="Calle, altura e indicaciones"
                       disabled={isSubmitting}
@@ -517,11 +543,12 @@ export default function Contact() {
                             <input
                               name="adminName"
                               type="text"
+                              onChange={() => clearError("adminName")}
                               className={`w-full px-4 py-3 rounded-xl border bg-white dark:bg-slate-900 text-slate-850 dark:text-white outline-none text-sm ${errors.adminName ? 'border-red-400 focus:ring-1 focus:ring-red-400' : 'border-brand-200 dark:border-slate-750 focus:ring-1 focus:ring-brand-500'}`}
                               placeholder="Ej. Adm. Patiño"
                               disabled={isSubmitting}
                             />
-                            {errors.adminName && <p className="text-[10px] text-red-500 flex items-center gap-0.5 mt-0.5"><AlertCircle className="w-3 h-3" />{errors.adminName}</p>}
+                            {errors.adminName && <p className="text-[10px] text-red-500 flex items-center gap-0.5 mt-0.5"><AlertCircle className="w-3.5 h-3.5" />{errors.adminName}</p>}
                           </div>
 
                           <div className="space-y-1">
@@ -529,6 +556,7 @@ export default function Contact() {
                             <input
                               name="adminAddress"
                               type="text"
+                              onChange={() => clearError("adminAddress")}
                               className={`w-full px-4 py-3 rounded-xl border bg-white dark:bg-slate-900 text-slate-850 dark:text-white outline-none text-sm ${errors.adminAddress ? 'border-red-400 focus:ring-1 focus:ring-red-400' : 'border-brand-200 dark:border-slate-750 focus:ring-1 focus:ring-brand-500'}`}
                               placeholder="Ej. La Rioja 1520"
                               disabled={isSubmitting}
@@ -541,6 +569,7 @@ export default function Contact() {
                             <input
                               name="adminContact"
                               type="text"
+                              onChange={() => clearError("adminContact")}
                               className={`w-full px-4 py-3 rounded-xl border bg-white dark:bg-slate-900 text-slate-850 dark:text-white outline-none text-sm ${errors.adminContact ? 'border-red-400 focus:ring-1 focus:ring-red-400' : 'border-brand-200 dark:border-slate-750 focus:ring-1 focus:ring-brand-500'}`}
                               placeholder="Ej. 223 491-xxxx"
                               disabled={isSubmitting}
@@ -567,6 +596,7 @@ export default function Contact() {
                     <select
                       name="frequencyHoursDays"
                       defaultValue=""
+                      onChange={() => clearError("frequencyHoursDays")}
                       className={`w-full px-5 py-4 rounded-2xl border bg-brand-50/20 dark:bg-slate-850 text-slate-800 dark:text-white outline-none transition-all disabled:opacity-50 appearance-none ${errors.frequencyHoursDays ? 'border-red-400 focus:ring-2 focus:ring-red-400' : 'border-brand-100 dark:border-slate-750 focus:ring-2 focus:ring-brand-500'}`}
                       disabled={isSubmitting}
                     >
@@ -585,6 +615,7 @@ export default function Contact() {
                     <select
                       name="preferredSchedule"
                       defaultValue=""
+                      onChange={() => clearError("preferredSchedule")}
                       className={`w-full px-5 py-4 rounded-2xl border bg-brand-50/20 dark:bg-slate-850 text-slate-800 dark:text-white outline-none transition-all disabled:opacity-50 appearance-none ${errors.preferredSchedule ? 'border-red-400 focus:ring-2 focus:ring-red-400' : 'border-brand-100 dark:border-slate-750 focus:ring-2 focus:ring-brand-500'}`}
                       disabled={isSubmitting}
                     >
@@ -608,7 +639,10 @@ export default function Contact() {
                           name="hasCurrentService"
                           value="si"
                           checked={hasCurrentService === "si"}
-                          onChange={() => setHasCurrentService("si")}
+                          onChange={() => {
+                            setHasCurrentService("si");
+                            clearError("hasCurrentService");
+                          }}
                           className="w-4 h-4 text-brand-500 focus:ring-brand-500 border-brand-200 dark:border-slate-700"
                           disabled={isSubmitting}
                         />
@@ -620,7 +654,10 @@ export default function Contact() {
                           name="hasCurrentService"
                           value="no"
                           checked={hasCurrentService === "no"}
-                          onChange={() => setHasCurrentService("no")}
+                          onChange={() => {
+                            setHasCurrentService("no");
+                            clearError("hasCurrentService");
+                          }}
                           className="w-4 h-4 text-brand-500 focus:ring-brand-500 border-brand-200 dark:border-slate-700"
                           disabled={isSubmitting}
                         />
@@ -718,6 +755,11 @@ export default function Contact() {
                       type="checkbox"
                       name="privacyAccepted"
                       id="privacyAccepted"
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          clearError("privacyAccepted");
+                        }
+                      }}
                       className="w-4 h-4 mt-1 text-brand-500 focus:ring-brand-500 border-brand-200 dark:border-slate-700 rounded cursor-pointer"
                       disabled={isSubmitting}
                     />
