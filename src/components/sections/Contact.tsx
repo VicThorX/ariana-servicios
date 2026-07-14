@@ -377,13 +377,16 @@ export default function Contact() {
             {/* Indicador de pasos */}
             <div className="mb-10 relative">
               <div className="flex items-center justify-between relative">
-                {/* Línea de fondo */}
-                <div className="absolute top-1/2 left-0 right-0 h-1 bg-brand-100 dark:bg-slate-850 -translate-y-1/2 z-0" />
-                {/* Línea de progreso activa */}
-                <div 
-                  className="absolute top-1/2 left-0 h-1 bg-brand-500 transition-all duration-300 -translate-y-1/2 z-0"
-                  style={{ width: `${((step - 1) / 2) * 100}%` }}
-                />
+                {/* Contenedor de las líneas para limitar su ancho al centro de los círculos extremos */}
+                <div className="absolute inset-x-5 top-5 h-1 -translate-y-1/2 z-0">
+                  {/* Línea de fondo */}
+                  <div className="w-full h-full bg-brand-100 dark:bg-slate-850" />
+                  {/* Línea de progreso activa */}
+                  <div 
+                    className="absolute top-0 left-0 h-full bg-brand-500 transition-all duration-300"
+                    style={{ width: `${((step - 1) / 2) * 100}%` }}
+                  />
+                </div>
                 
                 {[1, 2, 3].map((s) => (
                   <div key={s} className="relative z-10 flex flex-col items-center">
