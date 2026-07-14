@@ -1,0 +1,375 @@
+{
+  "communities": {
+    "0": [
+      "src_core_domain_models_career",
+      "src_core_domain_models_career_careerrequest",
+      "src_core_domain_models_contact",
+      "src_core_domain_models_contact_iemailservice",
+      "src_core_domain_models_contact_iemailservice_sendcareeremail",
+      "src_core_domain_models_contact_iemailservice_sendorderemail",
+      "src_core_domain_models_contact_iemailservice_sendquoteemail",
+      "src_core_domain_models_order",
+      "src_core_domain_models_order_orderrequest",
+      "src_core_domain_models_quote",
+      "src_core_domain_models_quote_quoterequest",
+      "src_core_infrastructure_services_mockemailservice",
+      "src_core_infrastructure_services_resendemailservice",
+      "src_core_infrastructure_services_resendemailservice_resend",
+      "src_core_use_cases_submitcareerrequest",
+      "src_core_use_cases_submitcareerrequest_submitcareerrequestusecase",
+      "src_core_use_cases_submitcareerrequest_submitcareerrequestusecase_constructor",
+      "src_core_use_cases_submitcareerrequest_submitcareerrequestusecase_execute",
+      "src_core_use_cases_submitorderrequest",
+      "src_core_use_cases_submitorderrequest_submitorderrequestusecase",
+      "src_core_use_cases_submitorderrequest_submitorderrequestusecase_constructor",
+      "src_core_use_cases_submitorderrequest_submitorderrequestusecase_execute",
+      "src_core_use_cases_submitquoterequest",
+      "src_core_use_cases_submitquoterequest_submitquoterequestusecase",
+      "src_core_use_cases_submitquoterequest_submitquoterequestusecase_constructor",
+      "src_core_use_cases_submitquoterequest_submitquoterequestusecase_execute"
+    ],
+    "1": [
+      "tsconfig",
+      "tsconfig_compileroptions",
+      "tsconfig_compileroptions_allowjs",
+      "tsconfig_compileroptions_esmoduleinterop",
+      "tsconfig_compileroptions_incremental",
+      "tsconfig_compileroptions_isolatedmodules",
+      "tsconfig_compileroptions_jsx",
+      "tsconfig_compileroptions_lib",
+      "tsconfig_compileroptions_module",
+      "tsconfig_compileroptions_moduleresolution",
+      "tsconfig_compileroptions_noemit",
+      "tsconfig_compileroptions_paths",
+      "tsconfig_compileroptions_plugins",
+      "tsconfig_compileroptions_resolvejsonmodule",
+      "tsconfig_compileroptions_skiplibcheck",
+      "tsconfig_compileroptions_strict",
+      "tsconfig_compileroptions_target",
+      "tsconfig_exclude",
+      "tsconfig_include",
+      "tsconfig_paths"
+    ],
+    "2": [
+      "src_app_page",
+      "src_app_page_home",
+      "src_components_layout_hero",
+      "src_components_layout_hero_hero",
+      "src_components_sections_about",
+      "src_components_sections_about_about",
+      "src_components_sections_about_values",
+      "src_components_sections_benefits",
+      "src_components_sections_benefits_benefits",
+      "src_components_sections_clients",
+      "src_components_sections_clients_clients",
+      "src_components_sections_legalsecurity",
+      "src_components_sections_legalsecurity_legalsecurity",
+      "src_components_sections_products",
+      "src_components_sections_products_products",
+      "src_components_sections_services",
+      "src_components_sections_services_services",
+      "src_data_clients",
+      "src_data_clients_clientlist"
+    ],
+    "3": [
+      "package",
+      "package_devdependencies",
+      "package_devdependencies_eslint",
+      "package_devdependencies_eslint_config_next",
+      "package_devdependencies_tailwindcss",
+      "package_devdependencies_tailwindcss_postcss",
+      "package_devdependencies_types_node",
+      "package_devdependencies_types_react",
+      "package_devdependencies_types_react_dom",
+      "package_devdependencies_typescript",
+      "package_name",
+      "package_private",
+      "package_scripts",
+      "package_scripts_build",
+      "package_scripts_dev",
+      "package_scripts_lint",
+      "package_scripts_start",
+      "package_version"
+    ],
+    "4": [
+      "src_app_layout",
+      "src_app_layout_metadata",
+      "src_app_layout_quicksand",
+      "src_app_layout_rootlayout",
+      "src_components_layout_footer",
+      "src_components_layout_footer_footer",
+      "src_components_layout_header",
+      "src_components_layout_header_header",
+      "src_components_ui_logo",
+      "src_components_ui_logo_logo",
+      "src_components_ui_logo_logoprops",
+      "src_components_ui_themeprovider",
+      "src_components_ui_themeprovider_themeprovider",
+      "src_components_ui_themetoggle",
+      "src_components_ui_themetoggle_themetoggle",
+      "src_components_ui_whatsappbutton",
+      "src_components_ui_whatsappbutton_whatsappbutton"
+    ],
+    "5": [
+      "src_app_actions_order",
+      "src_app_actions_order_getorderusecase",
+      "src_app_actions_order_submitorderform",
+      "src_app_productos_page",
+      "src_app_productos_page_cartitem",
+      "src_app_productos_page_productscatalogpage",
+      "src_core_domain_models_order_orderitem",
+      "src_data_products",
+      "src_data_products_catalogproducts",
+      "src_data_products_product"
+    ],
+    "6": [
+      "package_dependencies",
+      "package_dependencies_framer_motion",
+      "package_dependencies_lucide_react",
+      "package_dependencies_next",
+      "package_dependencies_next_themes",
+      "package_dependencies_react",
+      "package_dependencies_react_dom",
+      "package_dependencies_resend",
+      "package_dependencies_vercel_analytics"
+    ],
+    "7": [
+      "src_app_actions_career",
+      "src_app_actions_career_getcareerusecase",
+      "src_app_actions_career_submitcareerform",
+      "src_app_trabaja_con_nosotros_page",
+      "src_app_trabaja_con_nosotros_page_careerspage",
+      "src_core_infrastructure_services_mockemailservice_mockemailservice",
+      "src_core_infrastructure_services_mockemailservice_mockemailservice_sendcareeremail",
+      "src_core_infrastructure_services_mockemailservice_mockemailservice_sendorderemail",
+      "src_core_infrastructure_services_mockemailservice_mockemailservice_sendquoteemail"
+    ],
+    "8": [
+      "src_app_actions_contact",
+      "src_app_actions_contact_getquoteusecase",
+      "src_app_actions_contact_submitquoteform",
+      "src_components_sections_contact",
+      "src_components_sections_contact_contact",
+      "src_core_infrastructure_services_resendemailservice_resendemailservice",
+      "src_core_infrastructure_services_resendemailservice_resendemailservice_sendcareeremail",
+      "src_core_infrastructure_services_resendemailservice_resendemailservice_sendorderemail",
+      "src_core_infrastructure_services_resendemailservice_resendemailservice_sendquoteemail"
+    ],
+    "9": [
+      "src_core_domain_models_contact_contactrequest",
+      "src_core_domain_models_contact_iemailservice_sendcontactemail",
+      "src_core_infrastructure_services_mockemailservice_mockemailservice_sendcontactemail",
+      "src_core_infrastructure_services_resendemailservice_resendemailservice_sendcontactemail",
+      "src_core_use_cases_submitcontactrequest",
+      "src_core_use_cases_submitcontactrequest_submitcontactrequestusecase",
+      "src_core_use_cases_submitcontactrequest_submitcontactrequestusecase_constructor",
+      "src_core_use_cases_submitcontactrequest_submitcontactrequestusecase_execute"
+    ],
+    "10": [
+      "src_components_sections_reviews",
+      "src_components_sections_reviews_reviews",
+      "src_data_reviews",
+      "src_data_reviews_googlereviews",
+      "src_data_reviews_review"
+    ],
+    "11": [
+      "eslint_config",
+      "eslint_config_eslintconfig"
+    ],
+    "12": [
+      "next_config",
+      "next_config_nextconfig"
+    ],
+    "13": [
+      "postcss_config",
+      "postcss_config_config"
+    ],
+    "14": [
+      "src_app_robots",
+      "src_app_robots_robots"
+    ],
+    "15": [
+      "src_app_sitemap",
+      "src_app_sitemap_sitemap"
+    ],
+    "16": [
+      "src_components_sections_essence",
+      "src_components_sections_essence_essence"
+    ],
+    "17": [
+      "src_components_ui_brandlogo",
+      "src_components_ui_brandlogo_brandlogo"
+    ],
+    "18": [
+      "tools_generate_icons",
+      "tools_generate_icons_generate_icons"
+    ]
+  },
+  "cohesion": {
+    "0": 0.19384615384615383,
+    "1": 0.1,
+    "2": 0.1111111111111111,
+    "3": 0.1111111111111111,
+    "4": 0.15441176470588236,
+    "5": 0.35555555555555557,
+    "6": 0.2222222222222222,
+    "7": 0.3055555555555556,
+    "8": 0.2777777777777778,
+    "9": 0.2857142857142857,
+    "10": 0.5,
+    "11": 1.0,
+    "12": 1.0,
+    "13": 1.0,
+    "14": 1.0,
+    "15": 1.0,
+    "16": 1.0,
+    "17": 1.0,
+    "18": 1.0
+  },
+  "gods": [
+    {
+      "id": "src_core_domain_models_contact_iemailservice",
+      "label": "IEmailService",
+      "degree": 17
+    },
+    {
+      "id": "tsconfig_compileroptions",
+      "label": "compilerOptions",
+      "degree": 16
+    },
+    {
+      "id": "src_core_domain_models_career_careerrequest",
+      "label": "CareerRequest",
+      "degree": 10
+    },
+    {
+      "id": "src_core_domain_models_order_orderrequest",
+      "label": "OrderRequest",
+      "degree": 10
+    },
+    {
+      "id": "src_core_domain_models_quote_quoterequest",
+      "label": "QuoteRequest",
+      "degree": 10
+    },
+    {
+      "id": "src_core_infrastructure_services_mockemailservice_mockemailservice",
+      "label": "MockEmailService",
+      "degree": 9
+    },
+    {
+      "id": "src_core_infrastructure_services_resendemailservice_resendemailservice",
+      "label": "ResendEmailService",
+      "degree": 9
+    },
+    {
+      "id": "src_core_domain_models_contact_contactrequest",
+      "label": "ContactRequest",
+      "degree": 7
+    },
+    {
+      "id": "package_scripts",
+      "label": "scripts",
+      "degree": 5
+    },
+    {
+      "id": "src_app_actions_career_submitcareerform",
+      "label": "submitCareerForm()",
+      "degree": 4
+    }
+  ],
+  "surprises": [
+    {
+      "source": "MockEmailService",
+      "target": "IEmailService",
+      "source_files": [
+        "src/core/infrastructure/services/MockEmailService.ts",
+        "src/core/domain/models/Contact.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "implements",
+      "why": "bridges separate communities"
+    },
+    {
+      "source": "ResendEmailService",
+      "target": "IEmailService",
+      "source_files": [
+        "src/core/infrastructure/services/ResendEmailService.ts",
+        "src/core/domain/models/Contact.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "implements",
+      "why": "bridges separate communities"
+    },
+    {
+      "source": "CareersPage()",
+      "target": "submitCareerForm()",
+      "source_files": [
+        "src/app/trabaja-con-nosotros/page.tsx",
+        "src/app/actions/career.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "cross-file semantic connection"
+    },
+    {
+      "source": "ProductsCatalogPage()",
+      "target": "submitOrderForm()",
+      "source_files": [
+        "src/app/productos/page.tsx",
+        "src/app/actions/order.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "cross-file semantic connection"
+    },
+    {
+      "source": "CartItem",
+      "target": "Product",
+      "source_files": [
+        "src/app/productos/page.tsx",
+        "src/data/products.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "inherits",
+      "why": "cross-file semantic connection"
+    }
+  ],
+  "questions": [
+    {
+      "type": "bridge_node",
+      "question": "Why does `IEmailService` connect `IEmailService` to `contact.ts`, `ContactRequest`, `career.ts`?",
+      "why": "High betweenness centrality (0.042) - this node is a cross-community bridge."
+    },
+    {
+      "type": "bridge_node",
+      "question": "Why does `ResendEmailService` connect `contact.ts` to `IEmailService`, `ContactRequest`, `order.ts`, `career.ts`?",
+      "why": "High betweenness centrality (0.030) - this node is a cross-community bridge."
+    },
+    {
+      "type": "bridge_node",
+      "question": "Why does `MockEmailService` connect `career.ts` to `contact.ts`, `IEmailService`, `order.ts`, `ContactRequest`?",
+      "why": "High betweenness centrality (0.030) - this node is a cross-community bridge."
+    },
+    {
+      "type": "isolated_nodes",
+      "question": "What connects `eslintConfig`, `nextConfig`, `name` to the rest of the system?",
+      "why": "49 weakly-connected nodes found - possible documentation gaps or missing edges."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `compilerOptions` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.1 - nodes in this community are weakly interconnected."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `page.tsx` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.1111111111111111 - nodes in this community are weakly interconnected."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `devDependencies` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.1111111111111111 - nodes in this community are weakly interconnected."
+    }
+  ]
+}

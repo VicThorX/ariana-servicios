@@ -1,0 +1,13 @@
+# Ignore non-code files for graphify to run as a code-only corpus without requiring LLM keys
+*.md
+*.png
+*.jpg
+*.jpeg
+*.svg
+*.webp
+*.ico
+*.pdf
+public/
+**/node_modules/
+**/.next/
+**/.git/
